@@ -2,12 +2,13 @@ const removePx = val => val.replace(/(\d+)px/g, "$1");
 
 const formatNumber = val => Number(removePx(val));
 
-const matchNumbers = val => val.match(/(^|\s+)\d+(px)?/g);
+const matchNumbers = val =>
+  val.replace(/rgba?\(.*\)/g, "").match(/(^|\s+)\d+(px)?/g);
 
 const isZeroOrPxValue = val => val === "0" || /\d+px/.test(val);
 
 const filterNonNumbers = val =>
-  val.split(" ").filter(val => isNaN(formatNumber(val)));
+  val.split(/\s+(?![^(]*?\))/).filter(val => isNaN(formatNumber(val)));
 
 const filterNumbers = nums => {
   if (!nums) {

@@ -1198,6 +1198,38 @@ describe("box-shadow", () => {
     });
   });
 
+  it("supports rgb values", () => {
+    expect(
+      transform(`
+      .test {
+        box-shadow: 10px 20px 30px rgb(100, 100, 100);
+      }
+    `),
+    ).toEqual({
+      test: {
+        shadowOffset: { width: 10, height: 20 },
+        shadowRadius: 30,
+        shadowColor: "rgb(100, 100, 100)",
+      },
+    });
+  });
+
+  it("supports rgba values", () => {
+    expect(
+      transform(`
+      .test {
+        box-shadow: 10px 20px 30px rgba(100, 100, 100, 0.5);
+      }
+    `),
+    ).toEqual({
+      test: {
+        shadowOffset: { width: 10, height: 20 },
+        shadowRadius: 30,
+        shadowColor: "rgba(100, 100, 100, 0.5)",
+      },
+    });
+  });
+
   it("trims values", () => {
     expect(
       transform(`
