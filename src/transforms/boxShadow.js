@@ -3,10 +3,13 @@ export const boxShadowToShadowProps = value => {
   const nums = pxs
     ? pxs.map(val => val.replace("px", "")).map(val => Number(val))
     : [];
-  const [offsetX, offsetY, blurRadius] = nums;
-  const [color] = pxs
+  const offsetX = nums[0];
+  const offsetY = nums[1];
+  const blurRadius = nums[2];
+  const filtered = pxs
     ? value.split(" ").filter(val => pxs.indexOf(val) === -1)
     : [];
+  const color = filtered[0];
 
   if (offsetX === undefined || offsetY === undefined) {
     throw new Error(`Failed to parse declaration "boxShadow: ${value}"`);
