@@ -1,15 +1,33 @@
+const removePx = val => val.replace(/(\d+)px/g, "$1");
+
+const formatNumber = val => Number(removePx(val));
+
+const matchNumbers = val => val.match(/(^|\s+)\d+(px)?/g);
+
+const isZeroOrPxValue = val => val === "0" || /\d+px/.test(val);
+
+const filterNonNumbers = val =>
+  val.split(" ").filter(val => isNaN(formatNumber(val)));
+
+const filterNumbers = nums => {
+  if (!nums) {
+    return [];
+  }
+  return nums.map(val => val.trim()).map(val => {
+    if (!isZeroOrPxValue(val)) {
+      return undefined;
+    }
+    return formatNumber(val);
+  });
+};
+
 export const boxShadowToShadowProps = value => {
-  const pxs = value.match(/(\d*\.?\d+)px/g);
-  const nums = pxs
-    ? pxs.map(val => val.replace("px", "")).map(val => Number(val))
-    : [];
+  const nums = filterNumbers(matchNumbers(value));
+  const nonNums = filterNonNumbers(value);
   const offsetX = nums[0];
   const offsetY = nums[1];
   const blurRadius = nums[2];
-  const filtered = pxs
-    ? value.split(" ").filter(val => pxs.indexOf(val) === -1)
-    : [];
-  const color = filtered[0];
+  const color = nonNums[0];
 
   if (offsetX === undefined || offsetY === undefined) {
     throw new Error(`Failed to parse declaration "boxShadow: ${value}"`);

@@ -230,7 +230,7 @@ describe("misc", () => {
       color: #656656;
       box-shadow: 10px 20px 30px #fff;
     }
-  
+
     .container {
       padding: 30px;
       margin-top: 65px;
@@ -1198,6 +1198,64 @@ describe("box-shadow", () => {
     });
   });
 
+  it("trims values", () => {
+    expect(
+      transform(`
+      .test {
+        box-shadow: 10px   20px   30px   #f00 ;
+      }
+    `),
+    ).toEqual({
+      test: {
+        shadowOffset: { width: 10, height: 20 },
+        shadowRadius: 30,
+        shadowColor: "#f00",
+      },
+    });
+  });
+
+  it("transforms box-shadow with 0 values", () => {
+    expect(
+      transform(`
+      .test {
+        box-shadow: 0 0 1px red;
+      }
+    `),
+    ).toEqual({
+      test: {
+        shadowOffset: { width: 0, height: 0 },
+        shadowRadius: 1,
+        shadowColor: "red",
+      },
+    });
+    expect(
+      transform(`
+      .test {
+        box-shadow: 0 0 0 red;
+      }
+    `),
+    ).toEqual({
+      test: {
+        shadowOffset: { width: 0, height: 0 },
+        shadowRadius: 0,
+        shadowColor: "red",
+      },
+    });
+    expect(
+      transform(`
+      .test {
+        box-shadow: 1px 1px 0 #00f;
+      }
+    `),
+    ).toEqual({
+      test: {
+        shadowOffset: { width: 1, height: 1 },
+        shadowRadius: 0,
+        shadowColor: "#00f",
+      },
+    });
+  });
+
   it("transforms box-shadow without blur-radius", () => {
     expect(
       transform(`
@@ -1264,6 +1322,32 @@ describe("box-shadow", () => {
       }
     `);
     }).toThrowError('Failed to parse declaration "boxShadow: 10px"');
+  });
+
+  it("transforms box-shadow and enforces units for non 0 values", () => {
+    expect(() => {
+      transform(`
+      .test {
+        box-shadow: 10 20px 30px #f00;
+      }
+    `);
+    }).toThrowError(
+      'Failed to parse declaration "boxShadow: 10 20px 30px #f00"',
+    );
+    expect(() => {
+      transform(`
+      .test {
+        box-shadow: 10px 20;
+      }
+    `);
+    }).toThrowError('Failed to parse declaration "boxShadow: 10px 20"');
+    expect(() => {
+      transform(`
+      .test {
+        box-shadow: 20;
+      }
+    `);
+    }).toThrowError('Failed to parse declaration "boxShadow: 20"');
   });
 });
 
