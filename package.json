@@ -1,0 +1,38 @@
+{
+  "name": "css-to-react-native-transform",
+  "description": "Convert CSS text to a React Native stylesheet object",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "author": "Krister Kari",
+  "license": "MIT",
+  "scripts": {
+    "build": "babel src --ignore index.spec.js --out-dir dist",
+    "test": "jest",
+    "prepublish": "npm run build",
+    "release": "np"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-jest": "^21.2.0",
+    "babel-preset-es2015": "^6.24.1",
+    "jest": "^21.2.1",
+    "np": "^2.18.2"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest"
+    }
+  },
+  "dependencies": {
+    "css": "^2.2.1",
+    "css-to-react-native": "^2.0.4"
+  },
+  "repository": {
+    "type": "git",
+    "url":
+      "git+https://github.com/kristerkari/css-to-react-native-transform.git"
+  },
+  "keywords": ["React", "ReactNative", "styles", "CSS"],
+  "files": ["dist", "src", "README.md"]
+}
