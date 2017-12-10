@@ -247,6 +247,7 @@ describe("misc", () => {
         shadowColor: "#fff",
         shadowOffset: { height: 20, width: 10 },
         shadowRadius: 30,
+        shadowOpacity: 1,
       },
       container: {
         paddingBottom: 30,
@@ -1181,6 +1182,7 @@ describe("box-shadow", () => {
         shadowOffset: { width: 10, height: 20 },
         shadowRadius: 30,
         shadowColor: "red",
+        shadowOpacity: 1,
       },
     });
     expect(
@@ -1194,6 +1196,7 @@ describe("box-shadow", () => {
         shadowOffset: { width: 10, height: 20 },
         shadowRadius: 30,
         shadowColor: "#f00",
+        shadowOpacity: 1,
       },
     });
   });
@@ -1210,6 +1213,7 @@ describe("box-shadow", () => {
         shadowOffset: { width: 10, height: 20 },
         shadowRadius: 30,
         shadowColor: "rgb(100, 100, 100)",
+        shadowOpacity: 1,
       },
     });
   });
@@ -1226,6 +1230,7 @@ describe("box-shadow", () => {
         shadowOffset: { width: 10, height: 20 },
         shadowRadius: 30,
         shadowColor: "rgba(100, 100, 100, 0.5)",
+        shadowOpacity: 1,
       },
     });
   });
@@ -1242,6 +1247,7 @@ describe("box-shadow", () => {
         shadowOffset: { width: 10, height: 20 },
         shadowRadius: 30,
         shadowColor: "#f00",
+        shadowOpacity: 1,
       },
     });
   });
@@ -1258,6 +1264,7 @@ describe("box-shadow", () => {
         shadowOffset: { width: 0, height: 0 },
         shadowRadius: 1,
         shadowColor: "red",
+        shadowOpacity: 1,
       },
     });
     expect(
@@ -1271,6 +1278,7 @@ describe("box-shadow", () => {
         shadowOffset: { width: 0, height: 0 },
         shadowRadius: 0,
         shadowColor: "red",
+        shadowOpacity: 1,
       },
     });
     expect(
@@ -1284,6 +1292,7 @@ describe("box-shadow", () => {
         shadowOffset: { width: 1, height: 1 },
         shadowRadius: 0,
         shadowColor: "#00f",
+        shadowOpacity: 1,
       },
     });
   });
@@ -1300,6 +1309,7 @@ describe("box-shadow", () => {
         shadowOffset: { width: 10, height: 20 },
         shadowRadius: 0,
         shadowColor: "red",
+        shadowOpacity: 1,
       },
     });
   });
@@ -1316,6 +1326,7 @@ describe("box-shadow", () => {
         shadowOffset: { width: 10, height: 20 },
         shadowRadius: 30,
         shadowColor: "black",
+        shadowOpacity: 1,
       },
     });
   });
@@ -1332,6 +1343,7 @@ describe("box-shadow", () => {
         shadowOffset: { width: 10, height: 20 },
         shadowRadius: 0,
         shadowColor: "black",
+        shadowOpacity: 1,
       },
     });
   });
@@ -1425,6 +1437,7 @@ describe("rem unit", () => {
         shadowColor: "#fff",
         shadowOffset: { height: 32, width: 16 },
         shadowRadius: 48,
+        shadowOpacity: 1,
       },
     });
   });

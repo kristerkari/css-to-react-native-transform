@@ -37,5 +37,6 @@ export const boxShadowToShadowProps = value => {
     shadowOffset: { width: offsetX, height: offsetY },
     shadowRadius: blurRadius !== undefined ? blurRadius : 0,
     shadowColor: color !== undefined ? color : "black",
+    shadowOpacity: 1,
   };
 };
