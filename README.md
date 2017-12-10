@@ -7,7 +7,7 @@ to allow valid CSS to be turned into React Native Stylesheet objects.
 Example:
 
 ```css
-.my-class {
+.myClass {
   font-size: 18px;
   line-height: 24px;
   color: red;
@@ -43,8 +43,8 @@ import transform from "css-to-react-native-transform";
 // or const transform = require("css-to-react-native-transform").default;
 
 transform(`
-  .foo { 
-    color: #f00; 
+  .foo {
+    color: #f00;
   }
 `); // => { foo: { color: "#f00" } }
 ```
