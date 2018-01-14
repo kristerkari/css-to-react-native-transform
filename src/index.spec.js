@@ -106,10 +106,7 @@ describe("misc", () => {
     `),
     ).toEqual({
       test: {
-        borderTopLeftRadius: 1.5,
-        borderTopRightRadius: 1.5,
-        borderBottomRightRadius: 1.5,
-        borderBottomLeftRadius: 1.5,
+        borderRadius: 1.5,
       },
     });
   });
@@ -123,10 +120,7 @@ describe("misc", () => {
     `),
     ).toEqual({
       test: {
-        borderTopLeftRadius: -1.5,
-        borderTopRightRadius: -1.5,
-        borderBottomRightRadius: -1.5,
-        borderBottomLeftRadius: -1.5,
+        borderRadius: -1.5,
       },
     });
   });
@@ -157,10 +151,7 @@ describe("misc", () => {
     `),
     ).toEqual({
       test: {
-        borderTopColor: "red",
-        borderRightColor: "red",
-        borderBottomColor: "red",
-        borderLeftColor: "red",
+        borderColor: "red",
       },
     });
   });
@@ -524,6 +515,56 @@ describe("border", () => {
     `),
     ).toEqual({
       test: { borderWidth: 2, borderColor: "black", borderStyle: "solid" },
+    });
+  });
+
+  describe("shorthand border properties related to Image elements", () => {
+    it("transforms border-radius", () => {
+      expect(
+        transform(`
+        .test {
+          border-radius: 6px;
+        }
+      `),
+      ).toEqual({
+        test: { borderRadius: 6 },
+      });
+    });
+
+    it("transforms border-color", () => {
+      expect(
+        transform(`
+        .test {
+          border-color: #fff;
+        }
+      `),
+      ).toEqual({
+        test: { borderColor: "#fff" },
+      });
+    });
+
+    it("transforms border-width", () => {
+      expect(
+        transform(`
+        .test {
+          border-width: 4px;
+        }
+      `),
+      ).toEqual({
+        test: { borderWidth: 4 },
+      });
+    });
+
+    it("transforms border-style", () => {
+      expect(
+        transform(`
+        .test {
+          border-style: solid;
+        }
+      `),
+      ).toEqual({
+        test: { borderStyle: "solid" },
+      });
     });
   });
 });
@@ -1455,10 +1496,7 @@ describe("rem unit", () => {
     ).toEqual({
       test1: { transform: [{ translateY: 26 }, { translateX: 15 }] },
       test2: {
-        borderBottomLeftRadius: 9,
-        borderBottomRightRadius: 9,
-        borderTopLeftRadius: 9,
-        borderTopRightRadius: 9,
+        borderRadius: 9,
       },
     });
 
@@ -1474,10 +1512,7 @@ describe("rem unit", () => {
     ).toEqual({
       test1: { transform: [{ translateY: 26 }, { translateX: 15 }] },
       test2: {
-        borderBottomLeftRadius: 9,
-        borderBottomRightRadius: 9,
-        borderTopLeftRadius: 9,
-        borderTopRightRadius: 9,
+        borderRadius: 9,
       },
     });
   });
