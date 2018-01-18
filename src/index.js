@@ -16,15 +16,18 @@ const transform = css => {
 
   const result = {};
 
-  for (const rule of stylesheet.rules) {
-    for (let selector of rule.selectors) {
+  for (const r in stylesheet.rules) {
+    const rule = stylesheet.rules[r];
+    for (const s in rule.selectors) {
+      let selector = rule.selectors[s];
       selector = selector.replace(/\.|#/g, "");
 
       let styles;
 
       styles = result[selector] = result[selector] || {};
 
-      for (const declaration of rule.declarations) {
+      for (const d in rule.declarations) {
+        const declaration = rule.declarations[d];
         if (declaration.type !== "declaration") continue;
 
         const property = declaration.property;

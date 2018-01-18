@@ -1,5 +1,8 @@
 # css-to-react-native-transform
 
+[![Build Status](https://travis-ci.org/kristerkari/css-to-react-native-transform.svg?branch=master)](https://travis-ci.org/kristerkari/css-to-react-native-transform)
+[![Build status](https://ci.appveyor.com/api/projects/status/75s8ls2m47by8b1x/branch/master?svg=true)](https://ci.appveyor.com/project/kristerkari/css-to-react-native-transform/branch/master)
+
 A lightweight wrapper on top of
 [css-to-react-native](https://github.com/styled-components/css-to-react-native)
 to allow valid CSS to be turned into React Native Stylesheet objects.
