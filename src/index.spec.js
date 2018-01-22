@@ -531,6 +531,51 @@ describe("border", () => {
       });
     });
 
+    it("transforms border-radius with multiple values", () => {
+      expect(
+        transform(`
+        .test {
+          border-radius: 10px 5%;
+        }
+      `),
+      ).toEqual({
+        test: {
+          borderBottomLeftRadius: 10,
+          borderBottomRightRadius: "5%",
+          borderTopLeftRadius: "5%",
+          borderTopRightRadius: 10,
+        },
+      });
+      expect(
+        transform(`
+        .test {
+          border-radius: 2px 4px 2px;
+        }
+      `),
+      ).toEqual({
+        test: {
+          borderBottomLeftRadius: 2,
+          borderBottomRightRadius: 4,
+          borderTopLeftRadius: 4,
+          borderTopRightRadius: 2,
+        },
+      });
+      expect(
+        transform(`
+        .test {
+          border-radius: 1px 0 3px 4px;
+        }
+      `),
+      ).toEqual({
+        test: {
+          borderBottomLeftRadius: 3,
+          borderBottomRightRadius: 0,
+          borderTopLeftRadius: 4,
+          borderTopRightRadius: 1,
+        },
+      });
+    });
+
     it("transforms border-color", () => {
       expect(
         transform(`
@@ -543,6 +588,51 @@ describe("border", () => {
       });
     });
 
+    it("transforms border-color with multiple values", () => {
+      expect(
+        transform(`
+        .test {
+          border-color: red #f015ca;
+        }
+      `),
+      ).toEqual({
+        test: {
+          borderTopColor: "red",
+          borderRightColor: "#f015ca",
+          borderBottomColor: "red",
+          borderLeftColor: "#f015ca",
+        },
+      });
+      expect(
+        transform(`
+        .test {
+          border-color: red yellow green;
+        }
+      `),
+      ).toEqual({
+        test: {
+          borderTopColor: "red",
+          borderRightColor: "yellow",
+          borderBottomColor: "green",
+          borderLeftColor: "yellow",
+        },
+      });
+      expect(
+        transform(`
+        .test {
+          border-color: red yellow green blue;
+        }
+      `),
+      ).toEqual({
+        test: {
+          borderTopColor: "red",
+          borderRightColor: "yellow",
+          borderBottomColor: "green",
+          borderLeftColor: "blue",
+        },
+      });
+    });
+
     it("transforms border-width", () => {
       expect(
         transform(`
@@ -552,6 +642,51 @@ describe("border", () => {
       `),
       ).toEqual({
         test: { borderWidth: 4 },
+      });
+    });
+
+    it("transforms border-width with multiple values", () => {
+      expect(
+        transform(`
+        .test {
+          border-width: 2px 1.5rem;
+        }
+      `),
+      ).toEqual({
+        test: {
+          borderTopWidth: 2,
+          borderRightWidth: 24,
+          borderBottomWidth: 2,
+          borderLeftWidth: 24,
+        },
+      });
+      expect(
+        transform(`
+        .test {
+          border-width: 1px 2rem 1.5rem;
+        }
+      `),
+      ).toEqual({
+        test: {
+          borderTopWidth: 1,
+          borderRightWidth: 32,
+          borderBottomWidth: 24,
+          borderLeftWidth: 32,
+        },
+      });
+      expect(
+        transform(`
+        .test {
+          border-width: 1px 2rem 0 4rem;
+        }
+      `),
+      ).toEqual({
+        test: {
+          borderTopWidth: 1,
+          borderRightWidth: 32,
+          borderBottomWidth: 0,
+          borderLeftWidth: 64,
+        },
       });
     });
 
