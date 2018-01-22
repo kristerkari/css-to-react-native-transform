@@ -3,6 +3,7 @@ import transformCSS from "css-to-react-native";
 import { boxShadowToShadowProps } from "./transforms/boxShadow";
 import { remToPx } from "./transforms/rem";
 import { camelCase } from "./utils/camelCase";
+import { allEqual } from "./utils/allEqual";
 
 const shorthandBorderProps = [
   "border-radius",
@@ -38,13 +39,17 @@ const transform = css => {
         if (property === "box-shadow") {
           Object.assign(styles, boxShadowToShadowProps(value));
         } else if (shorthandBorderProps.indexOf(property) > -1) {
-          // transform shorthand border properties back to
+          // transform single value shorthand border properties back to
           // shorthand form to support styling `Image`.
           const transformed = transformCSS([[property, value]]);
           const vals = Object.keys(transformed).map(key => transformed[key]);
-          const replacement = {};
-          replacement[camelCase(property)] = vals[0];
-          Object.assign(styles, replacement);
+          if (allEqual(vals)) {
+            const replacement = {};
+            replacement[camelCase(property)] = vals[0];
+            Object.assign(styles, replacement);
+          } else {
+            Object.assign(styles, transformed);
+          }
         } else {
           Object.assign(styles, transformCSS([[property, value]]));
         }
