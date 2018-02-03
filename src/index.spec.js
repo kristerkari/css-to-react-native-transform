@@ -959,9 +959,6 @@ describe("flex-box", () => {
     });
   });
 
-  /* Implemented in css-to-react-native, but not released yet:
-     https://github.com/styled-components/css-to-react-native/pull/44
-
   it("transforms flex shorthand with flex-basis set to auto", () => {
     expect(
       transform(`
@@ -985,7 +982,6 @@ describe("flex-box", () => {
       test: { flexGrow: 0, flexShrink: 1 },
     });
   });
-  */
 
   it("transforms flex auto keyword", () => {
     expect(

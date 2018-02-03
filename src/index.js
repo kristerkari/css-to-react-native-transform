@@ -35,7 +35,7 @@ const transform = css => {
         const value = remToPx(declaration.value);
 
         // box-shadow is implemented in css-to-react-native,
-        // but not released yet. Remove after it is supported.
+        // but it's missing some features like rgb/rgba colors.
         if (property === "box-shadow") {
           Object.assign(styles, boxShadowToShadowProps(value));
         } else if (shorthandBorderProps.indexOf(property) > -1) {
