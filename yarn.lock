@@ -966,9 +966,9 @@ css-color-keywords@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/css-color-keywords/-/css-color-keywords-1.0.0.tgz#fea2616dc676b2962686b3af8dbdbe180b244e05"
 
-css-to-react-native@^2.0.4:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/css-to-react-native/-/css-to-react-native-2.0.4.tgz#cf4cc407558b3474d4ba8be1a2cd3b6ce713101b"
+css-to-react-native@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/css-to-react-native/-/css-to-react-native-2.1.0.tgz#671b922aa3c0bc880e09f8f00e5a4bf0803928e5"
   dependencies:
     css-color-keywords "^1.0.0"
     fbjs "^0.8.5"
@@ -2549,9 +2549,9 @@ normalize-path@^2.0.0, normalize-path@^2.0.1:
   dependencies:
     remove-trailing-separator "^1.0.1"
 
-np@^2.18.2:
-  version "2.18.2"
-  resolved "https://registry.yarnpkg.com/np/-/np-2.18.2.tgz#4571c8c8faa44a52cfd25d26b7d73af1f0fb1407"
+np@^2.18.3:
+  version "2.18.3"
+  resolved "https://registry.yarnpkg.com/np/-/np-2.18.3.tgz#00dfa459edd29ec8ea65e7e99ad973870a61b0cc"
   dependencies:
     any-observable "^0.2.0"
     chalk "^2.3.0"
