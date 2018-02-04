@@ -1,6 +1,5 @@
 import parseCSS from "css/lib/parse";
 import transformCSS from "css-to-react-native";
-import { boxShadowToShadowProps } from "./transforms/boxShadow";
 import { remToPx } from "./transforms/rem";
 import { camelCase } from "./utils/camelCase";
 import { allEqual } from "./utils/allEqual";
@@ -34,11 +33,7 @@ const transform = css => {
         const property = declaration.property;
         const value = remToPx(declaration.value);
 
-        // box-shadow is implemented in css-to-react-native,
-        // but it's missing some features like rgb/rgba colors.
-        if (property === "box-shadow") {
-          Object.assign(styles, boxShadowToShadowProps(value));
-        } else if (shorthandBorderProps.indexOf(property) > -1) {
+        if (shorthandBorderProps.indexOf(property) > -1) {
           // transform single value shorthand border properties back to
           // shorthand form to support styling `Image`.
           const transformed = transformCSS([[property, value]]);

@@ -1407,6 +1407,40 @@ describe("box-shadow", () => {
     });
   });
 
+  it("supports box-shadow with hsl color", () => {
+    expect(
+      transform(`
+      .test {
+        box-shadow: 10px 20px 30px hsl(120, 100%, 50%);
+      }
+    `),
+    ).toEqual({
+      test: {
+        shadowOffset: { width: 10, height: 20 },
+        shadowRadius: 30,
+        shadowColor: "hsl(120, 100%, 50%)",
+        shadowOpacity: 1,
+      },
+    });
+  });
+
+  it("supports box-shadow with hsla color", () => {
+    expect(
+      transform(`
+      .test {
+        box-shadow: 10px 20px 30px hsla(120, 100%, 50%, 0.7);
+      }
+    `),
+    ).toEqual({
+      test: {
+        shadowOffset: { width: 10, height: 20 },
+        shadowRadius: 30,
+        shadowColor: "hsla(120, 100%, 50%, 0.7)",
+        shadowOpacity: 1,
+      },
+    });
+  });
+
   it("trims values", () => {
     expect(
       transform(`
@@ -1528,6 +1562,18 @@ describe("box-shadow", () => {
       }
     `);
     }).toThrowError('Failed to parse declaration "boxShadow: red"');
+  });
+
+  it("transforms box-shadow and throws if multiple colors are used", () => {
+    expect(() => {
+      transform(`
+      .test {
+        box-shadow: 0 0 0 red yellow green blue;
+      }
+    `);
+    }).toThrowError(
+      'Failed to parse declaration "boxShadow: 0 0 0 red yellow green blue"',
+    );
   });
 
   it("transforms box-shadow and enforces offset-y if offset-x present", () => {
