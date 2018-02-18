@@ -586,10 +586,10 @@ describe("border", () => {
       `),
       ).toEqual({
         test: {
-          borderBottomLeftRadius: 10,
-          borderBottomRightRadius: "5%",
-          borderTopLeftRadius: "5%",
-          borderTopRightRadius: 10,
+          borderBottomLeftRadius: "5%",
+          borderBottomRightRadius: 10,
+          borderTopLeftRadius: 10,
+          borderTopRightRadius: "5%",
         },
       });
       expect(
@@ -600,10 +600,10 @@ describe("border", () => {
       `),
       ).toEqual({
         test: {
-          borderBottomLeftRadius: 2,
-          borderBottomRightRadius: 4,
-          borderTopLeftRadius: 4,
-          borderTopRightRadius: 2,
+          borderBottomLeftRadius: 4,
+          borderBottomRightRadius: 2,
+          borderTopLeftRadius: 2,
+          borderTopRightRadius: 4,
         },
       });
       expect(
@@ -614,10 +614,10 @@ describe("border", () => {
       `),
       ).toEqual({
         test: {
-          borderBottomLeftRadius: 3,
-          borderBottomRightRadius: 0,
-          borderTopLeftRadius: 4,
-          borderTopRightRadius: 1,
+          borderBottomLeftRadius: 4,
+          borderBottomRightRadius: 3,
+          borderTopLeftRadius: 1,
+          borderTopRightRadius: 0,
         },
       });
     });
@@ -899,6 +899,313 @@ describe("margin", () => {
     `),
     ).toEqual({
       test: { marginTop: 1, marginRight: 1, marginBottom: 1, marginLeft: 1 },
+    });
+  });
+
+  it("transforms margin shorthand with auto", () => {
+    expect(
+      transform(`
+      .test {
+        margin: auto;
+      }
+    `),
+    ).toEqual({
+      test: {
+        marginTop: "auto",
+        marginRight: "auto",
+        marginBottom: "auto",
+        marginLeft: "auto",
+      },
+    });
+    expect(
+      transform(`
+      .test {
+        margin: 0 auto;
+      }
+    `),
+    ).toEqual({
+      test: {
+        marginTop: 0,
+        marginRight: "auto",
+        marginBottom: 0,
+        marginLeft: "auto",
+      },
+    });
+    expect(
+      transform(`
+      .test {
+        margin: auto 0;
+      }
+    `),
+    ).toEqual({
+      test: {
+        marginTop: "auto",
+        marginRight: 0,
+        marginBottom: "auto",
+        marginLeft: 0,
+      },
+    });
+    expect(
+      transform(`
+      .test {
+        margin: 2px 3px auto;
+      }
+    `),
+    ).toEqual({
+      test: {
+        marginTop: 2,
+        marginRight: 3,
+        marginBottom: "auto",
+        marginLeft: 3,
+      },
+    });
+    expect(
+      transform(`
+      .test {
+        margin: 10px auto 4px;
+      }
+    `),
+    ).toEqual({
+      test: {
+        marginTop: 10,
+        marginRight: "auto",
+        marginBottom: 4,
+        marginLeft: "auto",
+      },
+    });
+  });
+});
+
+describe("text-decoration", () => {
+  it("transforms text-decoration into text-decoration- properties", () => {
+    expect(
+      transform(`
+      .test {
+        text-decoration: underline dotted red;
+      }
+    `),
+    ).toEqual({
+      test: {
+        textDecorationLine: "underline",
+        textDecorationStyle: "dotted",
+        textDecorationColor: "red",
+      },
+    });
+  });
+
+  it("transforms text-decoration without color", () => {
+    expect(
+      transform(`
+      .test {
+        text-decoration: underline dotted;
+      }
+    `),
+    ).toEqual({
+      test: {
+        textDecorationLine: "underline",
+        textDecorationStyle: "dotted",
+        textDecorationColor: "black",
+      },
+    });
+  });
+
+  it("transforms text-decoration without style", () => {
+    expect(
+      transform(`
+      .test {
+        text-decoration: underline red;
+      }
+    `),
+    ).toEqual({
+      test: {
+        textDecorationLine: "underline",
+        textDecorationStyle: "solid",
+        textDecorationColor: "red",
+      },
+    });
+  });
+
+  it("transforms text-decoration without style and color", () => {
+    expect(
+      transform(`
+      .test {
+        text-decoration: underline;
+      }
+      `),
+    ).toEqual({
+      test: {
+        textDecorationLine: "underline",
+        textDecorationStyle: "solid",
+        textDecorationColor: "black",
+      },
+    });
+  });
+
+  it("transforms text-decoration with two line properties", () => {
+    expect(
+      transform(`
+      .test {
+        text-decoration: underline line-through dashed red;
+      }
+      `),
+    ).toEqual({
+      test: {
+        textDecorationLine: "underline line-through",
+        textDecorationStyle: "dashed",
+        textDecorationColor: "red",
+      },
+    });
+  });
+
+  it("transforms text-decoration in different order", () => {
+    expect(
+      transform(`
+      .test {
+        text-decoration: dashed red underline line-through;
+      }
+    `),
+    ).toEqual({
+      test: {
+        textDecorationLine: "underline line-through",
+        textDecorationStyle: "dashed",
+        textDecorationColor: "red",
+      },
+    });
+  });
+
+  it("transforms text-decoration with ine in different order", () => {
+    expect(
+      transform(`
+      .test {
+        text-decoration: line-through underline;
+      }
+      `),
+    ).toEqual({
+      test: {
+        textDecorationLine: "underline line-through",
+        textDecorationStyle: "solid",
+        textDecorationColor: "black",
+      },
+    });
+  });
+
+  it("transforms text-decoration with none", () => {
+    expect(
+      transform(`
+      .test {
+        text-decoration: none;
+      }
+      `),
+    ).toEqual({
+      test: {
+        textDecorationLine: "none",
+        textDecorationStyle: "solid",
+        textDecorationColor: "black",
+      },
+    });
+  });
+
+  it("transforms text-decoration with none as part of multiple terms", () => {
+    expect(
+      transform(`
+      .test {
+        text-decoration: yellow none;
+      }
+      `),
+    ).toEqual({
+      test: {
+        textDecorationLine: "none",
+        textDecorationStyle: "solid",
+        textDecorationColor: "yellow",
+      },
+    });
+  });
+
+  it("transforms text-decoration with none in capitals", () => {
+    expect(
+      transform(`
+      .test {
+        text-decoration: yellow NONE;
+      }
+    `),
+    ).toEqual({
+      test: {
+        textDecorationLine: "none",
+        textDecorationStyle: "solid",
+        textDecorationColor: "yellow",
+      },
+    });
+  });
+
+  it("transforms text-decoration with style in capitals", () => {
+    expect(
+      transform(`
+      .test {
+        text-decoration: yellow UNDERLINE LINE-THROUGH;
+      }
+      `),
+    ).toEqual({
+      test: {
+        textDecorationLine: "underline line-through",
+        textDecorationStyle: "solid",
+        textDecorationColor: "yellow",
+      },
+    });
+  });
+
+  it("does not transform text-decoration if multiple colors are used", () => {
+    expect(() =>
+      transform(`
+      .test {
+        text-decoration: underline red yellow;
+      }
+      `),
+    ).toThrow(
+      'Failed to parse declaration "textDecoration: underline red yellow"',
+    );
+  });
+});
+
+describe("text-decoration-line", () => {
+  it("transforms text-decoration-line with underline line-through", () => {
+    expect(
+      transform(`
+      .test {
+        text-decoration-line: underline line-through;
+      }
+      `),
+    ).toEqual({
+      test: {
+        textDecorationLine: "underline line-through",
+      },
+    });
+  });
+
+  it("transforms text-decoration-line with line-through underline", () => {
+    expect(
+      transform(`
+      .test {
+        text-decoration-line: line-through underline;
+      }
+      `),
+    ).toEqual({
+      test: {
+        textDecorationLine: "underline line-through",
+      },
+    });
+  });
+
+  it("transforms text-decoration-line with none", () => {
+    expect(
+      transform(`
+      .test {
+        text-decoration-line: none;
+      }
+      `),
+    ).toEqual({
+      test: {
+        textDecorationLine: "none",
+      },
     });
   });
 });
@@ -1656,6 +1963,73 @@ describe("box-shadow", () => {
       }
     `);
     }).toThrowError('Failed to parse declaration "boxShadow: 20"');
+  });
+});
+
+describe("text-shadow", () => {
+  it("textShadow with all values", () => {
+    expect(
+      transform(`
+      .test {
+        text-shadow: 10px 20px 30px red;
+      }
+    `),
+    ).toEqual({
+      test: {
+        textShadowOffset: { width: 10, height: 20 },
+        textShadowRadius: 30,
+        textShadowColor: "red",
+      },
+    });
+  });
+
+  it("textShadow omitting blur", () => {
+    expect(
+      transform(`
+      .test {
+        text-shadow: 10px 20px red;
+      }
+    `),
+    ).toEqual({
+      test: {
+        textShadowOffset: { width: 10, height: 20 },
+        textShadowRadius: 0,
+        textShadowColor: "red",
+      },
+    });
+  });
+
+  it("textShadow omitting color", () => {
+    expect(
+      transform(`
+      .test {
+        text-shadow: 10px 20px;
+      }
+    `),
+    ).toEqual({
+      test: {
+        textShadowOffset: { width: 10, height: 20 },
+        textShadowRadius: 0,
+        textShadowColor: "black",
+      },
+    });
+  });
+
+  it("textShadow enforces offset-x and offset-y", () => {
+    expect(() =>
+      transform(`
+      .test {
+        text-shadow: red;
+      }
+      `),
+    ).toThrow('Failed to parse declaration "textShadow: red"');
+    expect(() =>
+      transform(`
+      .test {
+        text-shadow: 10px red;
+      }
+      `),
+    ).toThrow('Failed to parse declaration "textShadow: 10px red"');
   });
 });
 
