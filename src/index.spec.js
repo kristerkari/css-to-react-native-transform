@@ -263,6 +263,52 @@ describe("misc", () => {
     `);
     }).toThrowError('Failed to parse declaration "margin: 10"');
   });
+
+  it("when there are selectors with the same name, merges the common props", () => {
+    expect(
+      transform(`
+      .test {
+        margin: 10px;
+        background-color: #f00;
+      }
+      .test {
+        padding: 10px;
+        font-size: 20px;
+        margin: 5px;
+      }
+    `),
+    ).toEqual({
+      test: {
+        backgroundColor: "#f00",
+        paddingBottom: 10,
+        paddingLeft: 10,
+        paddingRight: 10,
+        paddingTop: 10,
+        fontSize: 20,
+        marginBottom: 5,
+        marginLeft: 5,
+        marginRight: 5,
+        marginTop: 5,
+      },
+    });
+  });
+
+  it("supports group of selectors", () => {
+    expect(
+      transform(`
+      .test1, .test2 {
+        color: red;
+      }
+    `),
+    ).toEqual({
+      test1: {
+        color: "red",
+      },
+      test2: {
+        color: "red",
+      },
+    });
+  });
 });
 
 describe("colors", () => {
