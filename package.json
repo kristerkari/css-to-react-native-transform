@@ -6,6 +6,8 @@
   "author": "Krister Kari",
   "license": "MIT",
   "scripts": {
+    "prettify": "prettier --write '**/*.@(js|json|md)'",
+    "precommit": "lint-staged",
     "build": "babel src --ignore index.spec.js --out-dir dist",
     "test": "jest",
     "prepublish": "npm run build",
@@ -16,13 +18,22 @@
     "babel-core": "^6.26.0",
     "babel-jest": "^21.2.0",
     "babel-preset-es2015": "^6.24.1",
+    "husky": "^0.14.3",
     "jest": "^21.2.1",
-    "np": "^2.18.3"
+    "lint-staged": "^7.0.0",
+    "np": "^2.18.3",
+    "prettier": "^1.11.1"
   },
   "jest": {
     "transform": {
       "^.+\\.jsx?$": "babel-jest"
     }
+  },
+  "lint-staged": {
+    "*.{js,json,md}": ["prettier --write", "git add"]
+  },
+  "prettier": {
+    "trailingComma": "all"
   },
   "dependencies": {
     "css": "^2.2.1",
@@ -30,17 +41,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kristerkari/css-to-react-native-transform.git"
+    "url":
+      "git+https://github.com/kristerkari/css-to-react-native-transform.git"
   },
-  "keywords": [
-    "React",
-    "ReactNative",
-    "styles",
-    "CSS"
-  ],
-  "files": [
-    "dist",
-    "src",
-    "README.md"
-  ]
+  "keywords": ["React", "ReactNative", "styles", "CSS"],
+  "files": ["dist", "src", "README.md"]
 }
