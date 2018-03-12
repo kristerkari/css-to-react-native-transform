@@ -2114,3 +2114,122 @@ describe("rem unit", () => {
     });
   });
 });
+
+describe("media queries", () => {
+  it("transforms media queries", () => {
+    expect(
+      transform(
+        `
+        .container {
+          background-color: #f00;
+        }
+
+        @media (orientation: landscape) {
+          .container {
+            background-color: #00f;
+          }
+        }
+        `,
+        {
+          parseMediaQueries: true,
+        },
+      ),
+    ).toEqual({
+      container: {
+        backgroundColor: "#f00",
+      },
+      "@media (orientation: landscape)": {
+        container: {
+          backgroundColor: "#00f",
+        },
+      },
+    });
+  });
+
+  it("merges media queries", () => {
+    expect(
+      transform(
+        `
+        .container {
+          background-color: #f00;
+        }
+        .box {
+          background-color: #f00;
+        }
+
+        @media (orientation: landscape) {
+          .container {
+            background-color: #00f;
+          }
+        }
+        @media (orientation: landscape) {
+          .box {
+            background-color: #00f;
+          }
+        }
+        `,
+        {
+          parseMediaQueries: true,
+        },
+      ),
+    ).toEqual({
+      container: {
+        backgroundColor: "#f00",
+      },
+      box: {
+        backgroundColor: "#f00",
+      },
+      "@media (orientation: landscape)": {
+        container: {
+          backgroundColor: "#00f",
+        },
+        box: {
+          backgroundColor: "#00f",
+        },
+      },
+    });
+  });
+
+  it("does not transform media queries without option enabled", () => {
+    expect(
+      transform(`
+      .container {
+        background-color: #f00;
+      }
+
+      @media (orientation: landscape) {
+        .container {
+          background-color: #00f;
+        }
+      }
+  `),
+    ).toEqual({
+      container: {
+        backgroundColor: "#f00",
+      },
+    });
+  });
+
+  expect(
+    transform(
+      `
+      .container {
+        background-color: #f00;
+      }
+
+      @media (orientation: landscape) {
+        .container {
+          background-color: #00f;
+        }
+      }
+      `,
+      {
+        parseMediaQueries: false,
+      },
+    ),
+  ).toEqual({
+    container: {
+      backgroundColor: "#f00",
+    },
+  });
+});

@@ -43,6 +43,8 @@ is transformed to:
 
 ## API
 
+### Transform CSS
+
 ```js
 import transform from "css-to-react-native-transform";
 // or const transform = require("css-to-react-native-transform").default;
@@ -51,7 +53,53 @@ transform(`
   .foo {
     color: #f00;
   }
-`); // => { foo: { color: "#f00" } }
+`);
+```
+
+↓ ↓ ↓ ↓ ↓ ↓
+
+```js
+{
+  foo: {
+    color: "#f00";
+  }
+}
+```
+
+### CSS Media Queries (experimental)
+
+_The API for CSS Media Queries might change in the future_
+
+```js
+transform(
+  `
+  .container {
+    background-color: #f00;
+  }
+
+  @media (orientation: landscape) {
+    .container {
+      background-color: #00f;
+    }
+  }
+`,
+  { parseMediaQueries: true },
+);
+```
+
+↓ ↓ ↓ ↓ ↓ ↓
+
+```js
+{
+  container: {
+    backgroundColor: "#f00",
+  },
+  "@media (orientation: landscape)": {
+    container: {
+      backgroundColor: "#00f",
+    },
+  },
+}
 ```
 
 ## Limitations

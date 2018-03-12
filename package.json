@@ -30,17 +30,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kristerkari/css-to-react-native-transform.git"
+    "url":
+      "git+https://github.com/kristerkari/css-to-react-native-transform.git"
   },
-  "keywords": [
-    "React",
-    "ReactNative",
-    "styles",
-    "CSS"
-  ],
-  "files": [
-    "dist",
-    "src",
-    "README.md"
-  ]
+  "keywords": ["React", "ReactNative", "styles", "CSS"],
+  "files": ["dist", "src", "README.md"]
 }
