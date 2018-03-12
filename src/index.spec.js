@@ -2208,28 +2208,28 @@ describe("media queries", () => {
         backgroundColor: "#f00",
       },
     });
-  });
 
-  expect(
-    transform(
-      `
-      .container {
-        background-color: #f00;
-      }
-
-      @media (orientation: landscape) {
+    expect(
+      transform(
+        `
         .container {
-          background-color: #00f;
+          background-color: #f00;
         }
-      }
-      `,
-      {
-        parseMediaQueries: false,
+
+        @media (orientation: landscape) {
+          .container {
+            background-color: #00f;
+          }
+        }
+        `,
+        {
+          parseMediaQueries: false,
+        },
+      ),
+    ).toEqual({
+      container: {
+        backgroundColor: "#f00",
       },
-    ),
-  ).toEqual({
-    container: {
-      backgroundColor: "#f00",
-    },
+    });
   });
 });
