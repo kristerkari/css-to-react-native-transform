@@ -45,5 +45,5 @@
       "git+https://github.com/kristerkari/css-to-react-native-transform.git"
   },
   "keywords": ["React", "ReactNative", "styles", "CSS"],
-  "files": ["dist", "src", "README.md"]
+  "files": ["dist", "src", "CHANGELOG.md", "README.md"]
 }
