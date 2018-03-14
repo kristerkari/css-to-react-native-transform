@@ -1,4 +1,4 @@
-## HEAD
+## v1.1.0
 
 * Added: experimental support for parsing CSS Media Queries. Use `parseMediaQueries: true` to enable parsing media queries.
 
