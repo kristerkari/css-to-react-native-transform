@@ -1,10 +1,17 @@
 import parseCSS from "css/lib/parse";
 import transformCSS from "css-to-react-native";
+import mediaQuery from "css-mediaquery";
 import { remToPx } from "./transforms/rem";
 import { camelCase } from "./utils/camelCase";
 import { allEqual } from "./utils/allEqual";
 import { values } from "./utils/values";
+import { mediaQueryTypes } from "./transforms/media-queries/types";
+import {
+  mediaQueryFeatures,
+  dimensionFeatures,
+} from "./transforms/media-queries/features";
 
+const lengthRe = /^(0$|(?:[+-]?(?:\d*\.)?\d+(?:[Ee][+-]?\d+)?)(?=px|rem$))/;
 const shorthandBorderProps = [
   "border-radius",
   "border-width",
@@ -56,6 +63,32 @@ const transform = (css, options) => {
       options != null &&
       options.parseMediaQueries === true
     ) {
+      const parsed = mediaQuery.parse(rule.media);
+
+      parsed.forEach(mq => {
+        if (mediaQueryTypes.indexOf(mq.type) === -1) {
+          throw new Error(`Failed to parse media query type "${mq.type}"`);
+        }
+
+        mq.expressions.forEach(e => {
+          const mf = e.modifier ? `${e.modifier}-${e.feature}` : e.feature;
+          const val = e.value ? `: ${e.value}` : "";
+
+          if (mediaQueryFeatures.indexOf(e.feature) === -1) {
+            throw new Error(`Failed to parse media query feature "${mf}"`);
+          }
+
+          if (
+            dimensionFeatures.indexOf(e.feature) > -1 &&
+            lengthRe.test(e.value) === false
+          ) {
+            throw new Error(
+              `Failed to parse media query expression "(${mf}${val})"`,
+            );
+          }
+        });
+      });
+
       const media = "@media " + rule.media;
       for (const r in rule.rules) {
         const ruleRule = rule.rules[r];
