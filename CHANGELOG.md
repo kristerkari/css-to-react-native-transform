@@ -1,3 +1,7 @@
+## v1.2.0
+
+* Added: validate that CSS Media Queries have correct syntax.
+
 ## v1.1.0
 
 * Added: experimental support for parsing CSS Media Queries. Use `parseMediaQueries: true` to enable parsing media queries.
