@@ -2232,4 +2232,199 @@ describe("media queries", () => {
       },
     });
   });
+
+  it("should support screen type", () => {
+    expect(
+      transform(
+        `
+        .foo {
+          color: blue;
+        }
+        @media screen and (min-height: 50px) and (max-height: 150px) {
+          .foo {
+            color: red;
+          }
+        }
+        @media screen and (min-height: 150px) and (max-height: 200px) {
+          .foo {
+            color: green;
+          }
+        }
+      `,
+        {
+          parseMediaQueries: true,
+        },
+      ),
+    ).toEqual({
+      foo: { color: "blue" },
+      "@media screen and (min-height: 50px) and (max-height: 150px)": {
+        foo: { color: "red" },
+      },
+      "@media screen and (min-height: 150px) and (max-height: 200px)": {
+        foo: { color: "green" },
+      },
+    });
+  });
+
+  it("should support all type", () => {
+    expect(
+      transform(
+        `
+      .foo {
+        color: blue;
+      }
+      @media all and (min-height: 50px) and (max-height: 150px) {
+        .foo {
+          color: red;
+        }
+      }
+      @media all and (min-height: 150px) and (max-height: 200px) {
+        .foo {
+          color: green;
+        }
+      }
+    `,
+        {
+          parseMediaQueries: true,
+        },
+      ),
+    ).toEqual({
+      foo: { color: "blue" },
+      "@media all and (min-height: 50px) and (max-height: 150px)": {
+        foo: { color: "red" },
+      },
+      "@media all and (min-height: 150px) and (max-height: 200px)": {
+        foo: { color: "green" },
+      },
+    });
+  });
+
+  it("should throw for invalid types", () => {
+    expect(() =>
+      transform(
+        `
+        .foo {
+          color: blue;
+        }
+
+        @media screens {
+          .foo {
+            color: red;
+          }
+        }
+      `,
+        {
+          parseMediaQueries: true,
+        },
+      ),
+    ).toThrow('Failed to parse media query type "screens"');
+    expect(() =>
+      transform(
+        `
+        .foo {
+          color: blue;
+        }
+        @media sdfgsdfg {
+          .foo {
+            color: red;
+          }
+        }
+      `,
+        {
+          parseMediaQueries: true,
+        },
+      ),
+    ).toThrow('Failed to parse media query type "sdfgsdfg"');
+  });
+
+  it("should throw for invalid features", () => {
+    expect(() =>
+      transform(
+        `
+        .foo {
+          color: blue;
+        }
+        @media (min-heigh: 50px) and (max-height: 150px) {
+          .foo {
+            color: red;
+          }
+        }
+      `,
+        {
+          parseMediaQueries: true,
+        },
+      ),
+    ).toThrow('Failed to parse media query feature "min-heigh"');
+    expect(() =>
+      transform(
+        `
+        .foo {
+          color: blue;
+        }
+        @media (orientations: landscape) {
+          .foo {
+            color: red;
+          }
+        }
+      `,
+        {
+          parseMediaQueries: true,
+        },
+      ),
+    ).toThrow('Failed to parse media query feature "orientations"');
+  });
+
+  it("should throw for values without units", () => {
+    expect(() =>
+      transform(
+        `
+        .foo {
+          color: blue;
+        }
+        @media (min-height: 50) and (max-height: 150px) {
+          .foo {
+            color: red;
+          }
+        }
+      `,
+        {
+          parseMediaQueries: true,
+        },
+      ),
+    ).toThrow('Failed to parse media query expression "(min-height: 50)"');
+    expect(() =>
+      transform(
+        `
+        .foo {
+          color: blue;
+        }
+        @media (min-height: 50px) and (max-height: 150) {
+          .foo {
+            color: red;
+          }
+        }
+      `,
+        {
+          parseMediaQueries: true,
+        },
+      ),
+    ).toThrow('Failed to parse media query expression "(max-height: 150)"');
+    expect(() =>
+      transform(
+        `
+        .foo {
+          color: blue;
+        }
+        @media (min-width) {
+          .foo {
+            color: red;
+          }
+        }
+      `,
+        {
+          parseMediaQueries: true,
+        },
+      ),
+    ).toThrow('Failed to parse media query expression "(min-width)"');
+  });
 });

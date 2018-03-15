@@ -30,20 +30,33 @@
     }
   },
   "lint-staged": {
-    "*.{js,json,md}": ["prettier --write", "git add"]
+    "*.{js,json,md}": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "prettier": {
     "trailingComma": "all"
   },
   "dependencies": {
     "css": "^2.2.1",
+    "css-mediaquery": "^0.1.2",
     "css-to-react-native": "^2.1.2"
   },
   "repository": {
     "type": "git",
-    "url":
-      "git+https://github.com/kristerkari/css-to-react-native-transform.git"
+    "url": "git+https://github.com/kristerkari/css-to-react-native-transform.git"
   },
-  "keywords": ["React", "ReactNative", "styles", "CSS"],
-  "files": ["dist", "src", "CHANGELOG.md", "README.md"]
+  "keywords": [
+    "React",
+    "ReactNative",
+    "styles",
+    "CSS"
+  ],
+  "files": [
+    "dist",
+    "src",
+    "CHANGELOG.md",
+    "README.md"
+  ]
 }
