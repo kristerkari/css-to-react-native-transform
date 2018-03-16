@@ -90,6 +90,10 @@ const transform = (css, options) => {
       });
 
       const media = "@media " + rule.media;
+
+      result.__mediaQueries = result.__mediaQueries || {};
+      result.__mediaQueries[media] = parsed[0];
+
       for (const r in rule.rules) {
         const ruleRule = rule.rules[r];
         for (const s in ruleRule.selectors) {

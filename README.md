@@ -93,6 +93,19 @@ transform(
 
 ```js
 {
+  __mediaQueries: {
+    "@media (orientation: landscape)": {
+      expressions: [
+        {
+          feature: "orientation",
+          modifier: undefined,
+          value: "landscape",
+        },
+      ],
+      inverse: false,
+      type: "all",
+    },
+  },
   container: {
     backgroundColor: "#f00",
   },
