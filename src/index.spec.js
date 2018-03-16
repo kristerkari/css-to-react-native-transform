@@ -2136,17 +2136,19 @@ describe("media queries", () => {
       ),
     ).toEqual({
       __mediaQueries: {
-        "@media (orientation: landscape)": {
-          expressions: [
-            {
-              feature: "orientation",
-              modifier: undefined,
-              value: "landscape",
-            },
-          ],
-          inverse: false,
-          type: "all",
-        },
+        "@media (orientation: landscape)": [
+          {
+            expressions: [
+              {
+                feature: "orientation",
+                modifier: undefined,
+                value: "landscape",
+              },
+            ],
+            inverse: false,
+            type: "all",
+          },
+        ],
       },
       container: {
         backgroundColor: "#f00",
@@ -2187,17 +2189,19 @@ describe("media queries", () => {
       ),
     ).toEqual({
       __mediaQueries: {
-        "@media (orientation: landscape)": {
-          expressions: [
-            {
-              feature: "orientation",
-              modifier: undefined,
-              value: "landscape",
-            },
-          ],
-          inverse: false,
-          type: "all",
-        },
+        "@media (orientation: landscape)": [
+          {
+            expressions: [
+              {
+                feature: "orientation",
+                modifier: undefined,
+                value: "landscape",
+              },
+            ],
+            inverse: false,
+            type: "all",
+          },
+        ],
       },
       container: {
         backgroundColor: "#f00",
@@ -2283,22 +2287,26 @@ describe("media queries", () => {
       ),
     ).toEqual({
       __mediaQueries: {
-        "@media screen and (min-height: 50px) and (max-height: 150px)": {
-          expressions: [
-            { feature: "height", modifier: "min", value: "50px" },
-            { feature: "height", modifier: "max", value: "150px" },
-          ],
-          inverse: false,
-          type: "screen",
-        },
-        "@media screen and (min-height: 150px) and (max-height: 200px)": {
-          expressions: [
-            { feature: "height", modifier: "min", value: "150px" },
-            { feature: "height", modifier: "max", value: "200px" },
-          ],
-          inverse: false,
-          type: "screen",
-        },
+        "@media screen and (min-height: 50px) and (max-height: 150px)": [
+          {
+            expressions: [
+              { feature: "height", modifier: "min", value: "50px" },
+              { feature: "height", modifier: "max", value: "150px" },
+            ],
+            inverse: false,
+            type: "screen",
+          },
+        ],
+        "@media screen and (min-height: 150px) and (max-height: 200px)": [
+          {
+            expressions: [
+              { feature: "height", modifier: "min", value: "150px" },
+              { feature: "height", modifier: "max", value: "200px" },
+            ],
+            inverse: false,
+            type: "screen",
+          },
+        ],
       },
       foo: { color: "blue" },
       "@media screen and (min-height: 50px) and (max-height: 150px)": {
@@ -2334,22 +2342,26 @@ describe("media queries", () => {
       ),
     ).toEqual({
       __mediaQueries: {
-        "@media all and (min-height: 50px) and (max-height: 150px)": {
-          expressions: [
-            { feature: "height", modifier: "min", value: "50px" },
-            { feature: "height", modifier: "max", value: "150px" },
-          ],
-          inverse: false,
-          type: "all",
-        },
-        "@media all and (min-height: 150px) and (max-height: 200px)": {
-          expressions: [
-            { feature: "height", modifier: "min", value: "150px" },
-            { feature: "height", modifier: "max", value: "200px" },
-          ],
-          inverse: false,
-          type: "all",
-        },
+        "@media all and (min-height: 50px) and (max-height: 150px)": [
+          {
+            expressions: [
+              { feature: "height", modifier: "min", value: "50px" },
+              { feature: "height", modifier: "max", value: "150px" },
+            ],
+            inverse: false,
+            type: "all",
+          },
+        ],
+        "@media all and (min-height: 150px) and (max-height: 200px)": [
+          {
+            expressions: [
+              { feature: "height", modifier: "min", value: "150px" },
+              { feature: "height", modifier: "max", value: "200px" },
+            ],
+            inverse: false,
+            type: "all",
+          },
+        ],
       },
       foo: { color: "blue" },
       "@media all and (min-height: 50px) and (max-height: 150px)": {
@@ -2357,6 +2369,58 @@ describe("media queries", () => {
       },
       "@media all and (min-height: 150px) and (max-height: 200px)": {
         foo: { color: "green" },
+      },
+    });
+  });
+
+  it("should support OR queries", () => {
+    expect(
+      transform(
+        `
+        .container {
+          background-color: #f00;
+        }
+
+        @media (orientation: portrait), (orientation: landscape)  {
+          .container {
+            background-color: #00f;
+          }
+        }
+        `,
+        {
+          parseMediaQueries: true,
+        },
+      ),
+    ).toEqual({
+      __mediaQueries: {
+        "@media (orientation: portrait), (orientation: landscape)": [
+          {
+            expressions: [
+              {
+                feature: "orientation",
+                modifier: undefined,
+                value: "portrait",
+              },
+            ],
+            inverse: false,
+            type: "all",
+          },
+          {
+            expressions: [
+              {
+                feature: "orientation",
+                modifier: undefined,
+                value: "landscape",
+              },
+            ],
+            inverse: false,
+            type: "all",
+          },
+        ],
+      },
+      container: { backgroundColor: "#f00" },
+      "@media (orientation: portrait), (orientation: landscape)": {
+        container: { backgroundColor: "#00f" },
       },
     });
   });
