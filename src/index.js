@@ -92,7 +92,7 @@ const transform = (css, options) => {
       const media = "@media " + rule.media;
 
       result.__mediaQueries = result.__mediaQueries || {};
-      result.__mediaQueries[media] = parsed[0];
+      result.__mediaQueries[media] = parsed;
 
       for (const r in rule.rules) {
         const ruleRule = rule.rules[r];
