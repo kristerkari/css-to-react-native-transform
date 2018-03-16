@@ -1,3 +1,7 @@
+## v1.3.0
+
+* Added: transformation result now includes parsed CSS media queries under `__mediaQueries` object. This removes the need to re-parse media queries after transforming CSS.
+
 ## v1.2.0
 
 * Added: validate that CSS Media Queries have correct syntax.
