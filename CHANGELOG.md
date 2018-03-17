@@ -1,3 +1,7 @@
+## v1.4.0
+
+* Added: skip parsing of all other selector types than class selectors.
+
 ## v1.3.1
 
 * Fixed: allow multiple parts for parsed media queries to support `OR` media queries.
