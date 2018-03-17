@@ -316,6 +316,34 @@ describe("misc", () => {
 });
 
 describe("selectors", () => {
+  it("supports dash in class names", () => {
+    expect(
+      transform(`
+      .test-1-2 {
+        color: red;
+      }
+    `),
+    ).toEqual({
+      "test-1-2": {
+        color: "red",
+      },
+    });
+  });
+
+  it("supports underscore in class names", () => {
+    expect(
+      transform(`
+      .test_1 {
+        color: red;
+      }
+    `),
+    ).toEqual({
+      test_1: {
+        color: "red",
+      },
+    });
+  });
+
   it("supports grouping selectors", () => {
     expect(
       transform(`
