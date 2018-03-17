@@ -53,7 +53,19 @@ const transform = (css, options) => {
   for (const r in stylesheet.rules) {
     const rule = stylesheet.rules[r];
     for (const s in rule.selectors) {
-      const selector = rule.selectors[s].replace(/^\.|#/, "");
+      if (
+        rule.selectors[s].indexOf(".") !== 0 ||
+        rule.selectors[s].indexOf(":") !== -1 ||
+        rule.selectors[s].indexOf("[") !== -1 ||
+        rule.selectors[s].indexOf("~") !== -1 ||
+        rule.selectors[s].indexOf(">") !== -1 ||
+        rule.selectors[s].indexOf("+") !== -1 ||
+        rule.selectors[s].indexOf(" ") !== -1
+      ) {
+        continue;
+      }
+
+      const selector = rule.selectors[s].replace(/^\./, "");
       const styles = (result[selector] = result[selector] || {});
       transformDecls(styles, rule.declarations);
     }
@@ -98,7 +110,7 @@ const transform = (css, options) => {
         const ruleRule = rule.rules[r];
         for (const s in ruleRule.selectors) {
           result[media] = result[media] || {};
-          const selector = ruleRule.selectors[s].replace(/^\.|#/, "");
+          const selector = ruleRule.selectors[s].replace(/^\./, "");
           const mediaStyles = (result[media][selector] =
             result[media][selector] || {});
           transformDecls(mediaStyles, ruleRule.declarations);
