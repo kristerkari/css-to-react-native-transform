@@ -1,6 +1,10 @@
 import transform from "./index";
 
 describe("misc", () => {
+  it("returns empty object when input is empty", () => {
+    expect(transform(``)).toEqual({});
+  });
+
   it("transforms numbers", () => {
     expect(
       transform(`
@@ -305,6 +309,263 @@ describe("misc", () => {
         color: "red",
       },
       test2: {
+        color: "red",
+      },
+    });
+  });
+});
+
+describe("selectors", () => {
+  it("supports grouping selectors", () => {
+    expect(
+      transform(`
+      .test, .test2, .test3 {
+        color: red;
+      }
+    `),
+    ).toEqual({
+      test: {
+        color: "red",
+      },
+      test2: {
+        color: "red",
+      },
+      test3: {
+        color: "red",
+      },
+    });
+  });
+
+  it("ignores grouping of ID selectors", () => {
+    expect(
+      transform(`
+      .test {
+        color: red;
+      }
+      #test1, #test2, #test3 {
+        color: red;
+      }
+    `),
+    ).toEqual({
+      test: {
+        color: "red",
+      },
+    });
+  });
+
+  it("ignores grouping of element selectors", () => {
+    expect(
+      transform(`
+      .test {
+        color: red;
+      }
+      p, h1, input {
+        color: red;
+      }
+    `),
+    ).toEqual({
+      test: {
+        color: "red",
+      },
+    });
+  });
+
+  it("ignores ID selectors", () => {
+    expect(
+      transform(`
+      .test {
+        color: red;
+      }
+      #foo {
+        color: blue;
+      }
+    `),
+    ).toEqual({
+      test: {
+        color: "red",
+      },
+    });
+  });
+
+  it("ignores type selectors", () => {
+    expect(
+      transform(`
+      .test {
+        color: red;
+      }
+      input[type=text] {
+        color: blue;
+      }
+    `),
+    ).toEqual({
+      test: {
+        color: "red",
+      },
+    });
+    expect(
+      transform(`
+      .test {
+        color: red;
+      }
+      [class^="test"] {
+        color: blue;
+      }
+    `),
+    ).toEqual({
+      test: {
+        color: "red",
+      },
+    });
+    expect(
+      transform(`
+      .test {
+        color: red;
+      }
+      .foo[class^="test"] {
+        color: blue;
+      }
+    `),
+    ).toEqual({
+      test: {
+        color: "red",
+      },
+    });
+  });
+
+  it("ignores universal selectors", () => {
+    expect(
+      transform(`
+      .test {
+        color: red;
+      }
+      * {
+        color: blue;
+      }
+    `),
+    ).toEqual({
+      test: {
+        color: "red",
+      },
+    });
+  });
+
+  it("ignores descendant selectors", () => {
+    expect(
+      transform(`
+      .test {
+        color: red;
+      }
+      .foo .bar {
+        color: blue;
+      }
+    `),
+    ).toEqual({
+      test: {
+        color: "red",
+      },
+    });
+  });
+
+  it("ignores direct child selectors", () => {
+    expect(
+      transform(`
+      .test {
+        color: red;
+      }
+      .foo > .bar {
+        color: blue;
+      }
+    `),
+    ).toEqual({
+      test: {
+        color: "red",
+      },
+    });
+  });
+
+  it("ignores adjancent sibling selectors", () => {
+    expect(
+      transform(`
+      .test {
+        color: red;
+      }
+      .foo + .bar {
+        color: blue;
+      }
+    `),
+    ).toEqual({
+      test: {
+        color: "red",
+      },
+    });
+  });
+
+  it("ignores general sibling selectors", () => {
+    expect(
+      transform(`
+      .test {
+        color: red;
+      }
+      .foo ~ .bar {
+        color: blue;
+      }
+    `),
+    ).toEqual({
+      test: {
+        color: "red",
+      },
+    });
+  });
+
+  it("ignores qualified selectors", () => {
+    expect(
+      transform(`
+      .test {
+        color: red;
+      }
+      p.bar {
+        color: blue;
+      }
+    `),
+    ).toEqual({
+      test: {
+        color: "red",
+      },
+    });
+  });
+
+  it("ignores element selectors", () => {
+    expect(
+      transform(`
+      .test {
+        color: red;
+      }
+      p {
+        color: blue;
+      }
+    `),
+    ).toEqual({
+      test: {
+        color: "red",
+      },
+    });
+  });
+
+  it("ignores pseudo selectors", () => {
+    expect(
+      transform(`
+      .test {
+        color: red;
+      }
+      .test1:hover {
+        color: blue;
+      }
+      .test2::before {
+        color: blue;
+      }
+    `),
+    ).toEqual({
+      test: {
         color: "red",
       },
     });
