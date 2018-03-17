@@ -11,6 +11,8 @@ A lightweight wrapper on top of
 [css-to-react-native](https://github.com/styled-components/css-to-react-native)
 to allow valid CSS to be turned into React Native Stylesheet objects.
 
+To keep things simple it only transforms class selectors (e.g. `.myClass {}`) and grouped class selectors (e.g. `.myClass, .myOtherClass {}`). Parsing of more complex selectors can be added as a new feature behind a feature flag (e.g. `transform(css, { parseAllSelectors: true })`) in the future if needed.
+
 Example:
 
 ```css
