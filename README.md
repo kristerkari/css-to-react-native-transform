@@ -72,7 +72,7 @@ transform(`
 
 ### CSS Media Queries (experimental)
 
-_The API for CSS Media Queries might change in the future_
+_The API and parsed syntax for CSS Media Queries might change in the future_
 
 ```js
 transform(
