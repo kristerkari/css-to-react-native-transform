@@ -18,6 +18,7 @@
     "babel-core": "^6.26.0",
     "babel-jest": "^22.4.1",
     "babel-preset-es2015": "^6.24.1",
+    "coveralls": "^3.0.0",
     "husky": "^0.14.3",
     "jest": "^22.4.2",
     "lint-staged": "^7.0.0",
@@ -27,6 +28,19 @@
   "jest": {
     "transform": {
       "^.+\\.jsx?$": "babel-jest"
+    },
+    "coverageDirectory": "./.coverage/",
+    "coverageReporters": [
+      "lcov",
+      "text"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 75,
+        "functions": 75,
+        "lines": 75,
+        "statements": 75
+      }
     }
   },
   "lint-staged": {

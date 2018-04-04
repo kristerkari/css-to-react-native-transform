@@ -11,6 +11,9 @@ matrix:
     - node_js: '9'
       script: npm test
       env: CI=test 9
+    - node_js: '9'
+      script: npm test -- --runInBand --coverage
+      env: CI=coverage
     - node_js: '8'
       script: npm test
       env: CI=test
@@ -19,3 +22,5 @@ matrix:
       env: CI=tests 6
 before_install:
   - npm install -g npm@latest
+after_success:
+  - if [ "$CI" = "coverage" ]; then cat ./.coverage/lcov.info | ./node_modules/.bin/coveralls; fi
