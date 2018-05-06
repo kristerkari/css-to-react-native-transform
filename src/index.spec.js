@@ -2662,6 +2662,51 @@ describe("media queries", () => {
     });
   });
 
+  it("should support NOT operator", () => {
+    expect(
+      transform(
+        `
+        .container {
+          background-color: #f00;
+        }
+
+        @media not screen and (device-width: 768px)  {
+          .container {
+            background-color: #00f;
+          }
+        }
+        `,
+        {
+          parseMediaQueries: true,
+        },
+      ),
+    ).toEqual({
+      __mediaQueries: {
+        "@media not screen and (device-width: 768px)": [
+          {
+            expressions: [
+              {
+                feature: "device-width",
+                modifier: undefined,
+                value: "768px",
+              },
+            ],
+            inverse: true,
+            type: "screen",
+          },
+        ],
+      },
+      container: {
+        backgroundColor: "#f00",
+      },
+      "@media not screen and (device-width: 768px)": {
+        container: {
+          backgroundColor: "#00f",
+        },
+      },
+    });
+  });
+
   it("should support OR queries", () => {
     expect(
       transform(
