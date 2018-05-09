@@ -55,7 +55,7 @@
   "dependencies": {
     "css": "^2.2.1",
     "css-mediaquery": "^0.1.2",
-    "css-to-react-native": "^2.1.2"
+    "css-to-react-native": "^2.2.0"
   },
   "repository": {
     "type": "git",
