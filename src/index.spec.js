@@ -2404,6 +2404,34 @@ describe("rem unit", () => {
   });
 });
 
+describe("viewport units", () => {
+  it("should transform viewport units", () => {
+    expect(
+      transform(`
+      .test {
+        font-size: 1vw;
+        line-height: 2vh;
+        padding: 1vmax;
+        margin: 1vmin;
+      }
+    `),
+    ).toEqual({
+      test: {
+        fontSize: "1vw",
+        lineHeight: "2vh",
+        marginBottom: "1vmin",
+        marginLeft: "1vmin",
+        marginRight: "1vmin",
+        marginTop: "1vmin",
+        paddingBottom: "1vmax",
+        paddingLeft: "1vmax",
+        paddingRight: "1vmax",
+        paddingTop: "1vmax",
+      },
+    });
+  });
+});
+
 describe("media queries", () => {
   it("transforms media queries", () => {
     expect(
