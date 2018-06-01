@@ -1,3 +1,8 @@
+## v1.5.0
+
+* Updated: `css-to-react-native` dependency to v2.2.0.
+* Fixed: the parser now allows passing through CSS units that are not supported by React Native.
+
 ## v1.4.0
 
 * Added: skip parsing of all other selector types than class selectors.
