@@ -121,7 +121,7 @@ transform(
 
 ### CSS Viewport Units (experimental)
 
-When [CSS Viewport Units](https://caniuse.com/#feat=viewport-units) are used, a special `__viewportUnits` feature flag will be added to the result. This is done so that the implementation that transforms viewport units to pixels knows that the style object has viewport units inside it, and can avoid doing extra work if the style object does not contain any viewport units.
+When [CSS Viewport Units](https://caniuse.com/#feat=viewport-units) are used, a special `__viewportUnits` feature flag is added to the result. This is done so that the implementation that transforms viewport units to pixels knows that the style object has viewport units inside it, and can avoid doing extra work if the style object does not contain any viewport units.
 
 ```js
 transform(`.foo { font-size: 1vh; }`);
