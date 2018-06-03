@@ -2416,6 +2416,7 @@ describe("viewport units", () => {
       }
     `),
     ).toEqual({
+      __viewportUnits: true,
       test: {
         fontSize: "1vw",
         lineHeight: "2vh",

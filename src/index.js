@@ -12,6 +12,7 @@ import {
 } from "./transforms/media-queries/features";
 
 const lengthRe = /^(0$|(?:[+-]?(?:\d*\.)?\d+(?:[Ee][+-]?\d+)?)(?=px|rem$))/;
+const viewportUnitRe = /^([+-]?[0-9.]+)(vh|vw|vmin|vmax)$/;
 const shorthandBorderProps = [
   "border-radius",
   "border-width",
@@ -19,13 +20,17 @@ const shorthandBorderProps = [
   "border-style",
 ];
 
-const transformDecls = (styles, declarations) => {
+const transformDecls = (styles, declarations, result) => {
   for (const d in declarations) {
     const declaration = declarations[d];
     if (declaration.type !== "declaration") continue;
 
     const property = declaration.property;
     const value = remToPx(declaration.value);
+
+    if (!result.__viewportUnits && viewportUnitRe.test(declaration.value)) {
+      result.__viewportUnits = true;
+    }
 
     if (shorthandBorderProps.indexOf(property) > -1) {
       // transform single value shorthand border properties back to
@@ -67,7 +72,7 @@ const transform = (css, options) => {
 
       const selector = rule.selectors[s].replace(/^\./, "");
       const styles = (result[selector] = result[selector] || {});
-      transformDecls(styles, rule.declarations);
+      transformDecls(styles, rule.declarations, result);
     }
 
     if (
@@ -113,7 +118,7 @@ const transform = (css, options) => {
           const selector = ruleRule.selectors[s].replace(/^\./, "");
           const mediaStyles = (result[media][selector] =
             result[media][selector] || {});
-          transformDecls(mediaStyles, ruleRule.declarations);
+          transformDecls(mediaStyles, ruleRule.declarations, result);
         }
       }
     }
