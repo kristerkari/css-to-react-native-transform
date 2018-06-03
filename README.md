@@ -119,10 +119,29 @@ transform(
 }
 ```
 
+### CSS Viewport Units (experimental)
+
+When [CSS Viewport Units](https://caniuse.com/#feat=viewport-units) are used, a special `__viewportUnits` feature flag will be added to the result. This is done so that the implementation that transforms viewport units to pixels knows that the style object has viewport units inside it, and can avoid doing extra work if the style object does not contain any viewport units.
+
+```js
+transform(`.foo { font-size: 1vh; }`);
+```
+
+↓ ↓ ↓ ↓ ↓ ↓
+
+```js
+{
+   __viewportUnits: true,
+  foo: {
+    fontSize: "1vh";
+  }
+}
+```
+
 ## Limitations
 
-* For `rem` unit the root element `font-size` is currently set to 16 pixels. A
+- For `rem` unit the root element `font-size` is currently set to 16 pixels. A
   setting needs to be implemented to allow the user to define the root element
   `font-size`.
-* There is also support for the `box-shadow` shorthand, and this converts into
+- There is also support for the `box-shadow` shorthand, and this converts into
   `shadow-` properties. Note that these only work on iOS.
