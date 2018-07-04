@@ -2691,6 +2691,147 @@ describe("media queries", () => {
     });
   });
 
+  it("should support platform types", () => {
+    expect(
+      transform(
+        `
+      @media web and (orientation: landscape) {
+        .container {
+          background-color: #00f;
+        }
+      }
+      @media ios and (orientation: landscape) {
+        .container {
+          background-color: #00f;
+        }
+      }
+      @media android and (orientation: landscape) {
+        .container {
+          background-color: #00f;
+        }
+      }
+      @media windows and (orientation: landscape) {
+        .container {
+          background-color: #00f;
+        }
+      }
+      @media macos and (orientation: landscape) {
+        .container {
+          background-color: #00f;
+        }
+      }
+      @media dom and (orientation: landscape) {
+        .container {
+          background-color: #00f;
+        }
+      }
+      `,
+        {
+          parseMediaQueries: true,
+        },
+      ),
+    ).toEqual({
+      "@media android and (orientation: landscape)": {
+        container: { backgroundColor: "#00f" },
+      },
+      "@media dom and (orientation: landscape)": {
+        container: { backgroundColor: "#00f" },
+      },
+      "@media ios and (orientation: landscape)": {
+        container: { backgroundColor: "#00f" },
+      },
+      "@media macos and (orientation: landscape)": {
+        container: { backgroundColor: "#00f" },
+      },
+      "@media web and (orientation: landscape)": {
+        container: { backgroundColor: "#00f" },
+      },
+      "@media windows and (orientation: landscape)": {
+        container: { backgroundColor: "#00f" },
+      },
+      __mediaQueries: {
+        "@media android and (orientation: landscape)": [
+          {
+            expressions: [
+              {
+                feature: "orientation",
+                modifier: undefined,
+                value: "landscape",
+              },
+            ],
+            inverse: false,
+            type: "android",
+          },
+        ],
+        "@media dom and (orientation: landscape)": [
+          {
+            expressions: [
+              {
+                feature: "orientation",
+                modifier: undefined,
+                value: "landscape",
+              },
+            ],
+            inverse: false,
+            type: "dom",
+          },
+        ],
+        "@media ios and (orientation: landscape)": [
+          {
+            expressions: [
+              {
+                feature: "orientation",
+                modifier: undefined,
+                value: "landscape",
+              },
+            ],
+            inverse: false,
+            type: "ios",
+          },
+        ],
+        "@media macos and (orientation: landscape)": [
+          {
+            expressions: [
+              {
+                feature: "orientation",
+                modifier: undefined,
+                value: "landscape",
+              },
+            ],
+            inverse: false,
+            type: "macos",
+          },
+        ],
+        "@media web and (orientation: landscape)": [
+          {
+            expressions: [
+              {
+                feature: "orientation",
+                modifier: undefined,
+                value: "landscape",
+              },
+            ],
+            inverse: false,
+            type: "web",
+          },
+        ],
+        "@media windows and (orientation: landscape)": [
+          {
+            expressions: [
+              {
+                feature: "orientation",
+                modifier: undefined,
+                value: "landscape",
+              },
+            ],
+            inverse: false,
+            type: "windows",
+          },
+        ],
+      },
+    });
+  });
+
   it("should support NOT operator", () => {
     expect(
       transform(
@@ -2824,6 +2965,23 @@ describe("media queries", () => {
         },
       ),
     ).toThrow('Failed to parse media query type "sdfgsdfg"');
+    expect(() =>
+      transform(
+        `
+      .foo {
+        color: blue;
+      }
+      @media linux and (orientation: landscape) {
+        .foo {
+          color: red;
+        }
+      }
+    `,
+        {
+          parseMediaQueries: true,
+        },
+      ),
+    ).toThrow('Failed to parse media query type "linux"');
   });
 
   it("should throw for invalid features", () => {
