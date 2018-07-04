@@ -1,3 +1,8 @@
+## v1.7.0
+
+- Updated: `css-to-react-native` dependency to v2.2.1.
+- Added: support for more platforms in CSS media queries.
+
 ## v1.6.0
 
 - Added: a feature flag for CSS viewport units.
