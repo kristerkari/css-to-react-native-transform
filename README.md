@@ -119,6 +119,25 @@ transform(
 }
 ```
 
+You can also speficy a platform as the media query type ("android", "dom", "ios", "macos", "web", "windows"):
+
+```js
+transform(
+  `
+  .container {
+    background-color: #f00;
+  }
+
+  @media android and (orientation: landscape) {
+    .container {
+      background-color: #00f;
+    }
+  }
+`,
+  { parseMediaQueries: true },
+);
+```
+
 ### CSS Viewport Units (experimental)
 
 When [CSS Viewport Units](https://caniuse.com/#feat=viewport-units) are used, a special `__viewportUnits` feature flag is added to the result. This is done so that the implementation that transforms viewport units to pixels knows that the style object has viewport units inside it, and can avoid doing extra work if the style object does not contain any viewport units.
