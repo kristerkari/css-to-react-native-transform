@@ -164,3 +164,11 @@ transform(`.foo { font-size: 1vh; }`);
   `font-size`.
 - There is also support for the `box-shadow` shorthand, and this converts into
   `shadow-` properties. Note that these only work on iOS.
+
+## Dependencies
+
+This library has the following packages as dependencies:
+
+- [css](https://github.com/reworkcss/css#readme) - CSS parser / stringifier
+- [css-mediaquery](https://github.com/ericf/css-mediaquery) - Parses and determines if a given CSS Media Query matches a set of values.
+- [css-to-react-native](https://github.com/styled-components/css-to-react-native) - Convert CSS text to a React Native stylesheet object
