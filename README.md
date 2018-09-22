@@ -4,6 +4,7 @@
 [![Build Status](https://travis-ci.org/kristerkari/css-to-react-native-transform.svg?branch=master)](https://travis-ci.org/kristerkari/css-to-react-native-transform)
 [![Build status](https://ci.appveyor.com/api/projects/status/75s8ls2m47by8b1x/branch/master?svg=true)](https://ci.appveyor.com/project/kristerkari/css-to-react-native-transform/branch/master)
 [![Coverage Status](https://coveralls.io/repos/github/kristerkari/css-to-react-native-transform/badge.svg?branch=master)](https://coveralls.io/github/kristerkari/css-to-react-native-transform?branch=master)
+[![Downloads per month](https://img.shields.io/npm/dm/css-to-react-native-transform.svg)](http://npmcharts.com/compare/css-to-react-native-transform)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://egghead.io/courses/how-to-contribute-to-an-open-source-project-on-github)
 [![Greenkeeper badge](https://badges.greenkeeper.io/kristerkari/css-to-react-native-transform.svg)](https://greenkeeper.io/)
 
