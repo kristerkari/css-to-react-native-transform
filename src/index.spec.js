@@ -1109,6 +1109,40 @@ describe("background", () => {
   });
 });
 
+describe("line-height", () => {
+  it("transforms line-height with value and unit", () => {
+    expect(
+      transform(`
+      .test {
+        line-height: 1.5px;
+      }
+    `),
+    ).toEqual({
+      test: {
+        lineHeight: 1.5,
+      },
+    });
+  });
+  it("throws for line-height with multiplier", () => {
+    expect(() =>
+      transform(`
+      .test {
+        line-height: 1.5;
+      }
+    `),
+    ).toThrow('Failed to parse declaration "line-height: 1.5"');
+  });
+  it("throws for line-height with % multiplier", () => {
+    expect(() =>
+      transform(`
+      .test {
+        line-height: 150%;
+      }
+    `),
+    ).toThrow('Failed to parse declaration "line-height: 150%"');
+  });
+});
+
 describe("margin", () => {
   it("transforms margin shorthands using 4 values", () => {
     expect(

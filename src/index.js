@@ -1,15 +1,15 @@
-import parseCSS from "css/lib/parse";
-import transformCSS from "css-to-react-native";
 import mediaQuery from "css-mediaquery";
-import { remToPx } from "./transforms/rem";
-import { camelCase } from "./utils/camelCase";
-import { allEqual } from "./utils/allEqual";
-import { values } from "./utils/values";
-import { mediaQueryTypes } from "./transforms/media-queries/types";
+import transformCSS from "css-to-react-native";
+import parseCSS from "css/lib/parse";
 import {
-  mediaQueryFeatures,
   dimensionFeatures,
+  mediaQueryFeatures,
 } from "./transforms/media-queries/features";
+import { mediaQueryTypes } from "./transforms/media-queries/types";
+import { remToPx } from "./transforms/rem";
+import { allEqual } from "./utils/allEqual";
+import { camelCase } from "./utils/camelCase";
+import { values } from "./utils/values";
 
 const lengthRe = /^(0$|(?:[+-]?(?:\d*\.)?\d+(?:[Ee][+-]?\d+)?)(?=px|rem$))/;
 const viewportUnitRe = /^([+-]?[0-9.]+)(vh|vw|vmin|vmax)$/;
@@ -28,7 +28,14 @@ const transformDecls = (styles, declarations, result) => {
     const property = declaration.property;
     const value = remToPx(declaration.value);
 
-    if (!result.__viewportUnits && viewportUnitRe.test(declaration.value)) {
+    const isLengthUnit = lengthRe.test(value);
+    const isViewportUnit = viewportUnitRe.test(value);
+
+    if (property === "line-height" && !isLengthUnit && !isViewportUnit) {
+      throw new Error(`Failed to parse declaration "${property}: ${value}"`);
+    }
+
+    if (!result.__viewportUnits && isViewportUnit) {
       result.__viewportUnits = true;
     }
 
