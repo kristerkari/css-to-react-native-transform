@@ -1136,6 +1136,32 @@ describe("line-height", () => {
       },
     });
   });
+  it("transforms line-height with %", () => {
+    expect(
+      transform(`
+      .test {
+        line-height: 150%;
+      }
+    `),
+    ).toEqual({
+      test: {
+        lineHeight: "150%",
+      },
+    });
+  });
+  it("transforms line-height with pt unit", () => {
+    expect(
+      transform(`
+      .test {
+        line-height: 2pt;
+      }
+    `),
+    ).toEqual({
+      test: {
+        lineHeight: "2pt",
+      },
+    });
+  });
   it("transforms line-height with viewport unit", () => {
     expect(
       transform(`
@@ -1158,15 +1184,6 @@ describe("line-height", () => {
       }
     `),
     ).toThrow('Failed to parse declaration "line-height: 1.5"');
-  });
-  it("throws for line-height with % multiplier", () => {
-    expect(() =>
-      transform(`
-      .test {
-        line-height: 150%;
-      }
-    `),
-    ).toThrow('Failed to parse declaration "line-height: 150%"');
   });
 });
 
