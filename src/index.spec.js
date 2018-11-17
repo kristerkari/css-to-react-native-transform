@@ -1123,6 +1123,33 @@ describe("line-height", () => {
       },
     });
   });
+  it("transforms line-height with rem unit", () => {
+    expect(
+      transform(`
+      .test {
+        line-height: 2rem;
+      }
+    `),
+    ).toEqual({
+      test: {
+        lineHeight: 32,
+      },
+    });
+  });
+  it("transforms line-height with viewport unit", () => {
+    expect(
+      transform(`
+      .test {
+        line-height: 2vh;
+      }
+    `),
+    ).toEqual({
+      __viewportUnits: true,
+      test: {
+        lineHeight: "2vh",
+      },
+    });
+  });
   it("throws for line-height with multiplier", () => {
     expect(() =>
       transform(`
