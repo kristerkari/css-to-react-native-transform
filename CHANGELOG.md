@@ -1,3 +1,8 @@
+## v1.7.1
+
+- Fixed: an error is now thrown for a `line-height` value without unit (`line-height` multiplier value is not supported in React Native).
+- Updated: `css-to-react-native` dependency to v2.2.2 and `css` dependency to v2.2.4.
+
 ## v1.7.0
 
 - Updated: `css-to-react-native` dependency to v2.2.1.
