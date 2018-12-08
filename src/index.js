@@ -9,6 +9,7 @@ import { mediaQueryTypes } from "./transforms/media-queries/types";
 import { remToPx } from "./transforms/rem";
 import { allEqual } from "./utils/allEqual";
 import { camelCase } from "./utils/camelCase";
+import { sortRules } from "./utils/sortRules";
 import { values } from "./utils/values";
 
 const lengthRe = /^(0$|(?:[+-]?(?:\d*\.)?\d+(?:[Ee][+-]?\d+)?)(?=px|rem$))/;
@@ -69,12 +70,31 @@ const transformDecls = (styles, declarations, result) => {
 
 const transform = (css, options) => {
   const { stylesheet } = parseCSS(css);
+  const rules = sortRules(stylesheet.rules);
 
   const result = {};
 
-  for (const r in stylesheet.rules) {
-    const rule = stylesheet.rules[r];
+  for (const r in rules) {
+    const rule = rules[r];
     for (const s in rule.selectors) {
+      if (rule.selectors[s] === ":export") {
+        let exportProps = {};
+
+        rule.declarations.forEach(({ property, value }) => {
+          if (
+            result[property] !== undefined &&
+            exportProps[property] === undefined
+          ) {
+            throw new Error(
+              `Failed to parse :export block because a CSS class in the same file is already using the name "${property}"`,
+            );
+          }
+
+          result[property] = exportProps[property] = value;
+        });
+        continue;
+      }
+
       if (
         rule.selectors[s].indexOf(".") !== 0 ||
         rule.selectors[s].indexOf(":") !== -1 ||
