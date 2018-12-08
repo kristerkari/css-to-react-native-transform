@@ -81,10 +81,11 @@ const transform = (css, options) => {
         let exportProps = {};
 
         rule.declarations.forEach(({ property, value }) => {
-          if (
+          const isAlreadyDefinedAsClass =
             result[property] !== undefined &&
-            exportProps[property] === undefined
-          ) {
+            exportProps[property] === undefined;
+
+          if (isAlreadyDefinedAsClass) {
             throw new Error(
               `Failed to parse :export block because a CSS class in the same file is already using the name "${property}"`,
             );
