@@ -78,12 +78,14 @@ const transform = (css, options) => {
     const rule = rules[r];
     for (const s in rule.selectors) {
       if (rule.selectors[s] === ":export") {
-        let exportProps = {};
+        if (!result.__exportProps) {
+          result.__exportProps = {};
+        }
 
         rule.declarations.forEach(({ property, value }) => {
           const isAlreadyDefinedAsClass =
             result[property] !== undefined &&
-            exportProps[property] === undefined;
+            result.__exportProps[property] === undefined;
 
           if (isAlreadyDefinedAsClass) {
             throw new Error(
@@ -91,7 +93,7 @@ const transform = (css, options) => {
             );
           }
 
-          result[property] = exportProps[property] = value;
+          result.__exportProps[property] = value;
         });
         continue;
       }
@@ -161,6 +163,12 @@ const transform = (css, options) => {
       }
     }
   }
+
+  if (result.__exportProps) {
+    Object.assign(result, result.__exportProps);
+    delete result.__exportProps;
+  }
+
   return result;
 };
 

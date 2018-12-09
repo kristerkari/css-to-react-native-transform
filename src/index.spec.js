@@ -3310,6 +3310,50 @@ describe("ICSS :export pseudo-selector", () => {
       },
       bar: "2",
     });
+    expect(
+      transform(`
+      :export {
+        bar: 3;
+      }
+
+      .foo {
+        color: blue;
+      }
+
+      :export {
+        bar: 1;
+        bar: 2;
+      }
+    `),
+    ).toEqual({
+      foo: {
+        color: "blue",
+      },
+      bar: "2",
+    });
+    expect(
+      transform(`
+      :export {
+        baz: 1;
+        bar: 3;
+      }
+
+      .foo {
+        color: blue;
+      }
+
+      :export {
+        bar: 1;
+        bar: 2;
+      }
+    `),
+    ).toEqual({
+      foo: {
+        color: "blue",
+      },
+      baz: "1",
+      bar: "2",
+    });
   });
 
   it("should throw an error if exportedKey has the same name as a class and is defined twice", () => {
