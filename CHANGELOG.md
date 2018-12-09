@@ -1,3 +1,7 @@
+## v1.8.0
+
+- Added: support for parsing CSS modules (ICSS) `:export` blocks.
+
 ## v1.7.1
 
 - Fixed: an error is now thrown for a `line-height` value without unit (`line-height` multiplier value is not supported in React Native).
