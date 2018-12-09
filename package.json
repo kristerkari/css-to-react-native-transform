@@ -8,7 +8,7 @@
   "scripts": {
     "prettify": "prettier --write '**/*.@(js|json|md)'",
     "precommit": "lint-staged",
-    "build": "babel src --ignore index.spec.js --out-dir dist",
+    "build": "babel src --ignore *.spec.js --out-dir dist",
     "test": "jest",
     "prepublish": "npm run build",
     "release": "npmpub"
