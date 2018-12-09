@@ -3153,3 +3153,282 @@ describe("media queries", () => {
     ).toThrow('Failed to parse media query expression "(min-width)"');
   });
 });
+
+describe("ICSS :export pseudo-selector", () => {
+  // https://github.com/css-modules/icss#export
+
+  it("should parse ICSS :export pseudo-selectors", () => {
+    expect(
+      transform(`
+      :export {
+        whitecolor: #fcf5ed;
+        test: 1px;
+      }
+    `),
+    ).toEqual({
+      whitecolor: "#fcf5ed",
+      test: "1px",
+    });
+  });
+
+  it("if there is more than :export one in a file, the keys and values are combined and exported together", () => {
+    expect(
+      transform(`
+
+      :export {
+        blackColor: #000;
+      }
+
+      .bar {
+        color: blue;
+      }
+
+      :export {
+        whitecolor: #fcf5ed;
+        test: 1px;
+      }
+    `),
+    ).toEqual({
+      bar: {
+        color: "blue",
+      },
+      blackColor: "#000",
+      whitecolor: "#fcf5ed",
+      test: "1px",
+    });
+  });
+
+  it("should support exportedKey value with spaces", () => {
+    expect(
+      transform(`
+      :export {
+        blackColor: something is something;
+      }
+
+      .bar {
+        color: blue;
+      }
+    `),
+    ).toEqual({
+      bar: {
+        color: "blue",
+      },
+      blackColor: "something is something",
+    });
+  });
+
+  it("an exportedValue does not need to be quoted, it is already treated as a literal string", () => {
+    expect(
+      transform(`
+      :export {
+        foo: something;
+        boo: 0;
+      }
+
+      .bar {
+        color: blue;
+      }
+    `),
+    ).toEqual({
+      bar: {
+        color: "blue",
+      },
+      foo: "something",
+      boo: "0",
+    });
+  });
+
+  it("should parse :export and support the same exportedKey with different case", () => {
+    expect(
+      transform(`
+      :export {
+        whitecolor: #fcf5ed;
+        WhiteColor: #fff;
+      }
+    `),
+    ).toEqual({
+      whitecolor: "#fcf5ed",
+      WhiteColor: "#fff",
+    });
+  });
+
+  it("should parse a selector and :export", () => {
+    expect(
+      transform(`
+      .foo {
+        color: blue;
+      }
+
+      :export {
+        whitecolor: #fcf5ed;
+        b: 0;
+        test: 1px;
+      }
+    `),
+    ).toEqual({
+      foo: {
+        color: "blue",
+      },
+      whitecolor: "#fcf5ed",
+      b: "0",
+      test: "1px",
+    });
+  });
+
+  it("should do nothing with an empty :export block", () => {
+    expect(
+      transform(`
+      .foo {
+        color: blue;
+      }
+
+      :export {
+      }
+    `),
+    ).toEqual({
+      foo: {
+        color: "blue",
+      },
+    });
+  });
+
+  it("if a particular exportedKey is duplicated, the last (in source order) takes precedence.", () => {
+    expect(
+      transform(`
+      .foo {
+        color: blue;
+      }
+
+      :export {
+        bar: 1;
+        bar: 2;
+      }
+    `),
+    ).toEqual({
+      foo: {
+        color: "blue",
+      },
+      bar: "2",
+    });
+    expect(
+      transform(`
+      :export {
+        bar: 3;
+      }
+
+      .foo {
+        color: blue;
+      }
+
+      :export {
+        bar: 1;
+        bar: 2;
+      }
+    `),
+    ).toEqual({
+      foo: {
+        color: "blue",
+      },
+      bar: "2",
+    });
+    expect(
+      transform(`
+      :export {
+        baz: 1;
+        bar: 3;
+      }
+
+      .foo {
+        color: blue;
+      }
+
+      :export {
+        bar: 1;
+        bar: 2;
+      }
+    `),
+    ).toEqual({
+      foo: {
+        color: "blue",
+      },
+      baz: "1",
+      bar: "2",
+    });
+  });
+
+  it("should throw an error if exportedKey has the same name as a class and is defined twice", () => {
+    expect(() =>
+      transform(`
+      :export {
+        bar: 1;
+        bar: 2;
+      }
+
+      .bar {
+        color: blue;
+      }
+    `),
+    ).toThrow(
+      'Failed to parse :export block because a CSS class in the same file is already using the name "bar"',
+    );
+  });
+
+  it("should throw an error if exportedKey has the same name as a class", () => {
+    expect(() =>
+      transform(`
+      .foo {
+        color: blue;
+      }
+
+      :export {
+        foo: 1;
+      }
+    `),
+    ).toThrow(
+      'Failed to parse :export block because a CSS class in the same file is already using the name "foo"',
+    );
+    expect(() =>
+      transform(`
+      :export {
+        foo: 1;
+      }
+
+      .foo {
+        color: red;
+      }
+    `),
+    ).toThrow(
+      'Failed to parse :export block because a CSS class in the same file is already using the name "foo"',
+    );
+    expect(() =>
+      transform(`
+      .foo {
+        color: blue;
+      }
+
+      :export {
+        foo: 1;
+      }
+
+      .foo {
+        color: red;
+      }
+    `),
+    ).toThrow(
+      'Failed to parse :export block because a CSS class in the same file is already using the name "foo"',
+    );
+  });
+
+  it("should throw for :export that is not top level", () => {
+    expect(() =>
+      transform(`
+      .foo {
+        color: red;
+        :export {
+          bar: 1;
+        }
+      }
+    `),
+    ).toThrow();
+  });
+});
