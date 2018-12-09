@@ -71,6 +71,33 @@ transform(`
 }
 ```
 
+### CSS Modules :export block
+
+Parsing the [CSS Modules (ICSS) :export](https://github.com/css-modules/icss#export) is supported. The `:export` is often used to share variables from CSS or from a preprocessor like Sass/Less/Stylus to Javascript:
+
+```js
+transform(`
+  .foo {
+    color: #f00;
+  }
+
+  :export {
+    myProp: #fff;
+  }
+`);
+```
+
+↓ ↓ ↓ ↓ ↓ ↓
+
+```js
+{
+  foo: {
+    color: "#f00";
+  },
+  myProp: "#fff";
+}
+```
+
 ### CSS Media Queries (experimental)
 
 _The API and parsed syntax for CSS Media Queries might change in the future_
