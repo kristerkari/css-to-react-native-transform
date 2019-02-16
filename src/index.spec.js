@@ -1687,7 +1687,7 @@ describe("flex-box", () => {
       }
     `),
     ).toEqual({
-      test: { flexGrow: 0, flexShrink: 1 },
+      test: { flexBasis: "auto", flexGrow: 0, flexShrink: 1 },
     });
   });
 
@@ -1699,7 +1699,7 @@ describe("flex-box", () => {
       }
     `),
     ).toEqual({
-      test: { flexGrow: 0, flexShrink: 1 },
+      test: { flexBasis: "auto", flexGrow: 0, flexShrink: 1 },
     });
   });
 
@@ -1711,7 +1711,7 @@ describe("flex-box", () => {
       }
     `),
     ).toEqual({
-      test: { flexGrow: 1, flexShrink: 1 },
+      test: { flexBasis: "auto", flexGrow: 1, flexShrink: 1 },
     });
   });
 
@@ -1723,7 +1723,7 @@ describe("flex-box", () => {
       }
     `),
     ).toEqual({
-      test: { flexGrow: 0, flexShrink: 0 },
+      test: { flexBasis: "auto", flexGrow: 0, flexShrink: 0 },
     });
   });
 
