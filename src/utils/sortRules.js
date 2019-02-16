@@ -3,7 +3,10 @@ function isExport(n) {
 }
 
 function byExport(a, b) {
-  return isExport(a.selectors);
+  if (!isExport(a.selectors) && isExport(b.selectors)) {
+    return -1;
+  }
+  return 0;
 }
 
 function byLine(a, b) {
