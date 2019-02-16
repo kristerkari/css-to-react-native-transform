@@ -13,12 +13,13 @@ function byExport(a, b) {
 }
 
 function byLine(a, b) {
-  if (
-    isExport(a.selectors) &&
-    isExport(b.selectors) &&
-    a.position.start.line > b.position.start.line
-  ) {
-    return 1;
+  if (isExport(a.selectors) && isExport(b.selectors)) {
+    if (a.position.start.line > b.position.start.line) {
+      return 1;
+    }
+    if (a.position.start.line < b.position.start.line) {
+      return -1;
+    }
   }
   return 0;
 }
