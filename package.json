@@ -9,7 +9,7 @@
     "prettify": "prettier --write '**/*.@(js|json|md)'",
     "precommit": "lint-staged",
     "build": "babel src --ignore *.spec.js --out-dir dist",
-    "test": "jest",
+    "test": "jest --coverage",
     "prepublish": "npm run build",
     "release": "npmpub"
   },
