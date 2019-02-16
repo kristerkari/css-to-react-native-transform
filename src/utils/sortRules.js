@@ -6,6 +6,9 @@ function byExport(a, b) {
   if (!isExport(a.selectors) && isExport(b.selectors)) {
     return -1;
   }
+  if (isExport(a.selectors) && !isExport(b.selectors)) {
+    return 1;
+  }
   return 0;
 }
 
