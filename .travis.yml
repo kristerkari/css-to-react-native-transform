@@ -10,7 +10,7 @@ matrix:
   include:
     - node_js: "11"
       script: npm test
-      env: CI=test 10
+      env: CI=test 11
     - node_js: "10"
       script: npm test
       env: CI=test 10
