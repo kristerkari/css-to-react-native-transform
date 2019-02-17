@@ -215,16 +215,25 @@ describe("sortRules", () => {
             {
               type: "declaration",
               property: "bar",
-              value: "3",
+              value: "1",
               position: {
-                start: { line: 3, column: 3 },
-                end: { line: 3, column: 9 },
+                start: { line: 11, column: 3 },
+                end: { line: 11, column: 9 },
+              },
+            },
+            {
+              type: "declaration",
+              property: "bar",
+              value: "2",
+              position: {
+                start: { line: 12, column: 3 },
+                end: { line: 12, column: 9 },
               },
             },
           ],
           position: {
-            start: { line: 2, column: 1 },
-            end: { line: 4, column: 2 },
+            start: { line: 10, column: 1 },
+            end: { line: 13, column: 2 },
           },
         },
         {
@@ -253,25 +262,16 @@ describe("sortRules", () => {
             {
               type: "declaration",
               property: "bar",
-              value: "1",
+              value: "3",
               position: {
-                start: { line: 11, column: 3 },
-                end: { line: 11, column: 9 },
-              },
-            },
-            {
-              type: "declaration",
-              property: "bar",
-              value: "2",
-              position: {
-                start: { line: 12, column: 3 },
-                end: { line: 12, column: 9 },
+                start: { line: 3, column: 3 },
+                end: { line: 3, column: 9 },
               },
             },
           ],
           position: {
-            start: { line: 10, column: 1 },
-            end: { line: 13, column: 2 },
+            start: { line: 2, column: 1 },
+            end: { line: 4, column: 2 },
           },
         },
       ]),
