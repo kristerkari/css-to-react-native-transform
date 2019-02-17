@@ -1,3 +1,8 @@
+## v1.8.1
+
+- Fixed: flex-box shorthands missing `flex-basis: auto` in some cases.
+- Fixed: sorting :export blocks on Node.js version 11 was not working.
+
 ## v1.8.0
 
 - Added: support for parsing CSS modules (ICSS) `:export` blocks.
