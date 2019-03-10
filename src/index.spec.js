@@ -20,6 +20,19 @@ describe("misc", () => {
     });
   });
 
+  it("ignores unsupported at-rules", () => {
+    expect(transform(`@charset "utf-8";`)).toEqual({});
+    expect(
+      transform(`
+      @supports (display: grid) {
+        div {
+          display: grid;
+        }
+      }
+    `),
+    ).toEqual({});
+  });
+
   it("allows pixels in unspecialized transform", () => {
     expect(
       transform(`
