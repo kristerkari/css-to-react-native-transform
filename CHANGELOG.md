@@ -1,3 +1,7 @@
+## v1.9.0
+
+- Added: Typescript type definitions.
+
 ## v1.8.1
 
 - Fixed: flex-box shorthands missing `flex-basis: auto` in some cases.
