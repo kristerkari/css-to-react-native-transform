@@ -74,6 +74,7 @@
   "files": [
     "dist",
     "src",
+    "index.d.ts",
     "CHANGELOG.md",
     "README.md"
   ]
