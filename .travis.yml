@@ -20,9 +20,6 @@ matrix:
     - node_js: "8"
       script: npm test
       env: CI=test
-    - node_js: "6"
-      script: npm test
-      env: CI=tests 6
 before_install:
   - npm install -g npm@latest
 after_success:
