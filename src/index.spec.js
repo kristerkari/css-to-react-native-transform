@@ -981,6 +981,48 @@ describe("border", () => {
       });
     });
 
+    it("transforms border-color with hex color", () => {
+      expect(
+        transform(`
+        .test {
+          border-color: #f00;
+        }
+      `),
+      ).toEqual({
+        test: {
+          borderColor: "#f00",
+        },
+      });
+    });
+
+    it("transforms border-color with rgb color", () => {
+      expect(
+        transform(`
+      .test {
+        border-color: rgb(255, 0, 0);
+      }
+    `),
+      ).toEqual({
+        test: {
+          borderColor: "rgb(255, 0, 0)",
+        },
+      });
+    });
+
+    it("transforms border-color with rgba color", () => {
+      expect(
+        transform(`
+      .test {
+        border-color: rgba(255, 0, 0, 0.1);
+      }
+    `),
+      ).toEqual({
+        test: {
+          borderColor: "rgba(255, 0, 0, 0.1)",
+        },
+      });
+    });
+
     it("transforms border-width", () => {
       expect(
         transform(`
