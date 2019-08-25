@@ -14,14 +14,14 @@
     "release": "npmpub"
   },
   "devDependencies": {
-    "@babel/cli": "^7.5.0",
-    "@babel/core": "^7.5.4",
-    "@babel/preset-env": "^7.5.4",
-    "babel-jest": "^24.8.0",
-    "coveralls": "^3.0.4",
-    "husky": "^3.0.0",
-    "jest": "^24.8.0",
-    "lint-staged": "^9.1.0",
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "babel-jest": "^24.9.0",
+    "coveralls": "^3.0.6",
+    "husky": "^3.0.4",
+    "jest": "^24.9.0",
+    "lint-staged": "^9.2.4",
     "npmpub": "^4.1.0",
     "prettier": "^1.18.2"
   },
@@ -59,7 +59,7 @@
   "dependencies": {
     "css": "^2.2.4",
     "css-mediaquery": "^0.1.2",
-    "css-to-react-native": "^2.3.1"
+    "css-to-react-native": "^2.3.2"
   },
   "repository": {
     "type": "git",
