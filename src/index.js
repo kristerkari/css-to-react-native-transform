@@ -16,6 +16,7 @@ const lengthRe = /^(0$|(?:[+-]?(?:\d*\.)?\d+(?:[Ee][+-]?\d+)?)(?=px|rem$))/;
 const viewportUnitRe = /^([+-]?[0-9.]+)(vh|vw|vmin|vmax)$/;
 const percentRe = /^([+-]?(?:\d*\.)?\d+(?:[Ee][+-]?\d+)?%)$/;
 const unsupportedUnitRe = /^([+-]?(?:\d*\.)?\d+(?:[Ee][+-]?\d+)?(ch|em|ex|cm|mm|in|pc|pt))$/;
+const cssPartRe = /::?part\(([^)]+)\)/;
 const shorthandBorderProps = [
   "border-radius",
   "border-width",
@@ -100,7 +101,10 @@ const transform = (css, options) => {
 
       if (
         rule.selectors[s].indexOf(".") !== 0 ||
-        rule.selectors[s].indexOf(":") !== -1 ||
+        (rule.selectors[s].indexOf(":") !== -1 &&
+          (options != null && options.parsePartSelectors
+            ? !cssPartRe.test(rule.selectors[s])
+            : true)) ||
         rule.selectors[s].indexOf("[") !== -1 ||
         rule.selectors[s].indexOf("~") !== -1 ||
         rule.selectors[s].indexOf(">") !== -1 ||

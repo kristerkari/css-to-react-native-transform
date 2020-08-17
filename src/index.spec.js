@@ -3487,3 +3487,76 @@ describe("ICSS :export pseudo-selector", () => {
     ).toThrow();
   });
 });
+
+describe("::part() selectors", () => {
+  it("transforms ::part() selectors", () => {
+    expect(
+      transform(
+        `
+        .container {
+          background-color: #f00;
+        }
+
+        .container::part(input) {
+          background-color: #00f;
+        }
+        `,
+        {
+          parsePartSelectors: true,
+        },
+      ),
+    ).toEqual({
+      container: {
+        backgroundColor: "#f00",
+      },
+      "container::part(input)": {
+        backgroundColor: "#00f",
+      },
+    });
+  });
+
+  it("does not transform ::part() selectors without option enabled", () => {
+    expect(
+      transform(
+        `
+        .container {
+          background-color: #f00;
+        }
+
+        .container::part(input) {
+          background-color: #00f;
+        }
+        `,
+        {},
+      ),
+    ).toEqual({
+      container: {
+        backgroundColor: "#f00",
+      },
+    });
+
+    expect(
+      transform(
+        `
+        .container {
+          background-color: #f00;
+        }
+
+        .container::part(input) {
+          background-color: #00f;
+        }
+        `,
+        {
+          parsePartSelectors: true,
+        },
+      ),
+    ).toEqual({
+      container: {
+        backgroundColor: "#f00",
+      },
+      "container::part(input)": {
+        backgroundColor: "#00f",
+      },
+    });
+  });
+});
