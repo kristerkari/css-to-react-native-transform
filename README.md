@@ -185,6 +185,40 @@ transform(`.foo { font-size: 1vh; }`);
 }
 ```
 
+### CSS ::part() pseudo-elements
+
+To enable parsing [::part() selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/::part), specify the `parsePartSelectors` flag:
+
+```js
+transform(
+  `
+  .container {
+    background-color: #f00;
+  }
+
+  .container::part(input) {
+    background-color: #00f;
+  }
+  `,
+  {
+    parsePartSelectors: true,
+  },
+);
+```
+
+↓ ↓ ↓ ↓ ↓ ↓
+
+```js
+{
+  container: {
+    backgroundColor: "#f00",
+  },
+  "container::part(input)": {
+    backgroundColor: "#00f",
+  },
+}
+```
+
 ## Limitations
 
 - For `rem` unit the root element `font-size` is currently set to 16 pixels. A
