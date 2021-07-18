@@ -9,15 +9,10 @@ describe("misc", () => {
     expect(
       transform(`
       .test {
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
+        z-index: 0
       }
-    `),
-    ).toEqual({
-      test: { top: 0, left: 0, right: 0, bottom: 0 },
-    });
+      `),
+    ).toEqual({ test: { zIndex: 0 } });
   });
 
   it("ignores unsupported at-rules", () => {
@@ -138,6 +133,27 @@ describe("misc", () => {
     ).toEqual({
       test: {
         borderRadius: -1.5,
+      },
+    });
+  });
+
+  it("allows uppercase units", () => {
+    expect(
+      transform(`
+      .test {
+        top: 0PX
+      }
+      `),
+    ).toEqual({ test: { top: 0 } });
+    expect(
+      transform(`
+      .test {
+        transform: rotate(30DEG)
+      }
+      `),
+    ).toEqual({
+      test: {
+        transform: [{ rotate: "30deg" }],
       },
     });
   });
@@ -770,6 +786,22 @@ describe("transform", () => {
 });
 
 describe("border", () => {
+  it("transforms border none", () => {
+    expect(
+      transform(`
+      .test {
+        border: none
+      }
+      `),
+    ).toEqual({
+      test: {
+        borderWidth: 0,
+        borderColor: "black",
+        borderStyle: "solid",
+      },
+    });
+  });
+
   it("transforms border shorthand", () => {
     expect(
       transform(`
@@ -864,6 +896,32 @@ describe("border", () => {
     ).toEqual({
       test: { borderWidth: 2, borderColor: "black", borderStyle: "solid" },
     });
+  });
+
+  it("transforms border for unsupported units", () => {
+    expect(
+      transform(`
+      .test {
+        border: 3em solid black
+      }
+      `),
+    ).toEqual({
+      test: {
+        borderWidth: "3em",
+        borderColor: "black",
+        borderStyle: "solid",
+      },
+    });
+  });
+
+  it("does not transform border with percentage width", () => {
+    expect(() =>
+      transform(`
+      .test {
+        border: 3% solid black
+      }
+      `),
+    ).toThrow();
   });
 
   describe("shorthand border properties related to Image elements", () => {
@@ -1746,6 +1804,38 @@ describe("flex-box", () => {
     });
   });
 
+  it("transforms flex shorthand with flex-basis set to percent", () => {
+    expect(
+      transform(`
+      .test {
+        flex: 1 2 30%
+      }
+      `),
+    ).toEqual({
+      test: {
+        flexGrow: 1,
+        flexShrink: 2,
+        flexBasis: "30%",
+      },
+    });
+  });
+
+  it("transforms flex shorthand with flex-basis set to unsupported unit", () => {
+    expect(
+      transform(`
+      .test {
+        flex: 1 2 30em
+      }
+      `),
+    ).toEqual({
+      test: {
+        flexGrow: 1,
+        flexShrink: 2,
+        flexBasis: "30em",
+      },
+    });
+  });
+
   it("transforms flex shorthand with flex-basis set to auto appearing first", () => {
     expect(
       transform(`
@@ -1981,23 +2071,14 @@ describe("font", () => {
     });
   });
 
-  it("allows line height as multiple", () => {
-    expect(
+  it("does not allow line height as multiple", () => {
+    expect(() => {
       transform(`
       .test {
-        font: 16px/1.5 "Helvetica";
+        font: 16px/1.5 "Helvetica"
       }
-    `),
-    ).toEqual({
-      test: {
-        fontFamily: "Helvetica",
-        fontSize: 16,
-        fontWeight: "normal",
-        fontStyle: "normal",
-        fontVariant: [],
-        lineHeight: 24,
-      },
-    });
+      `);
+    }).toThrow();
   });
 
   it("transforms font without quotes", () => {
@@ -2453,6 +2534,46 @@ describe("text-shadow", () => {
       `),
     ).toThrow('Failed to parse declaration "textShadow: 10px red"');
   });
+});
+
+it("transforms place content", () => {
+  expect(
+    transform(`
+    .test {
+      place-content: center center
+    }
+    `),
+  ).toEqual({
+    test: {
+      alignContent: "center",
+      justifyContent: "center",
+    },
+  });
+});
+
+it("transforms place content with one value", () => {
+  expect(
+    transform(`
+    .test {
+      place-content: center
+    }
+    `),
+  ).toEqual({
+    test: {
+      alignContent: "center",
+      justifyContent: "stretch",
+    },
+  });
+});
+
+it("does not allow justify content without align content", () => {
+  expect(() =>
+    transform(`
+    .test {
+      place-content: space-evenly
+    }
+    `),
+  ).toThrow();
 });
 
 describe("rem unit", () => {
