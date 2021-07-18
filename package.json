@@ -57,7 +57,7 @@
     "trailingComma": "all"
   },
   "dependencies": {
-    "css": "^2.2.4",
+    "css": "^3.0.0",
     "css-mediaquery": "^0.1.2",
     "css-to-react-native": "^3.0.0"
   },
