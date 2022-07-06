@@ -19,7 +19,7 @@
     "@babel/preset-env": "^7.14.7",
     "babel-jest": "^27.0.6",
     "coveralls": "^3.0.6",
-    "husky": "^7.0.1",
+    "husky": "^8.0.1",
     "jest": "^28.1.2",
     "lint-staged": "^11.0.1",
     "npmpub": "^5.0.0",
