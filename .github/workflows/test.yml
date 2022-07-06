@@ -1,0 +1,43 @@
+name: Tests
+on: [push, pull_request]
+env:
+  CI: true
+  NODE_COV: 16 # The Node.js version to run coverage on
+
+jobs:
+  run:
+    name: Node ${{ matrix.node }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [14, 16]
+        os: [ubuntu-latest, windows-latest]
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v2
+
+      - name: Set Node.js version
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Install yarn dependencies
+        run: yarn install
+
+      - name: Run Jest tests
+        run: yarn test --runInBand
+        if: "!(startsWith(matrix.os, 'ubuntu') && matrix.node == env.NODE_COV)"
+
+      - name: Run Jest tests with coverage
+        run: yarn test --runInBand --coverage
+        if: startsWith(matrix.os, 'ubuntu') && matrix.node == env.NODE_COV
+
+      - name: Run Coveralls
+        uses: coverallsapp/github-action@master
+        if: startsWith(matrix.os, 'ubuntu') && matrix.node == env.NODE_COV
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+          path-to-lcov: "./.coverage/lcov.info"
