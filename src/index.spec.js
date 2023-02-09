@@ -1176,6 +1176,18 @@ describe("font", () => {
       test: { fontVariant: ["tabular-nums"] },
     });
   });
+
+  it("transforms multiple font variant as an array", () => {
+    expect(
+      transform(`
+      .test {
+        font-variant: tabular-nums oldstyle-nums;
+      }
+      `),
+    ).toEqual({
+      test: { fontVariant: ["tabular-nums", "oldstyle-nums"] },
+    });
+  });
 });
 
 describe("background", () => {
