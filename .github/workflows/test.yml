@@ -2,7 +2,7 @@ name: Tests
 on: [push, pull_request]
 env:
   CI: true
-  NODE_COV: 16 # The Node.js version to run coverage on
+  NODE_COV: 20 # The Node.js version to run coverage on
 
 jobs:
   run:
@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node: [14, 16]
+        node: [18, 20]
         os: [ubuntu-latest, windows-latest]
 
     steps:
