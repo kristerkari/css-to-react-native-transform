@@ -1,3 +1,8 @@
+## v2.1.0
+
+- Added: `ignoreRule` option
+- Updated: `css-to-react-native` dependency to v3.2.0
+
 ## v2.0.0
 
 - Breaking: updated `css-to-react-native` dependency to v3.0.0. This version removes the support for line-height with multiplier, adds support for `place-content` CSS property, and more.
