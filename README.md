@@ -69,6 +69,38 @@ transform(`
 }
 ```
 
+### `ignoreRule` option
+
+```js
+transform(
+  `  
+  .foo {
+    color: red;
+  }
+  .bar {
+    font-size: 12px;
+  }
+`,
+  {
+    ignoreRule: (selector) => {
+      if (selector === ".foo") {
+        return true;
+      }
+    },
+  },
+);
+```
+
+↓ ↓ ↓ ↓ ↓ ↓
+
+```js
+{
+  bar: {
+    fontSize: 12;
+  }
+}
+```
+
 ### CSS Modules :export block
 
 Parsing the [CSS Modules (ICSS) :export](https://github.com/css-modules/icss#export) is supported. The `:export` is often used to share variables from CSS or from a preprocessor like Sass/Less/Stylus to Javascript:
