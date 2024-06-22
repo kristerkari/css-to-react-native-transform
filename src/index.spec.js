@@ -2670,6 +2670,81 @@ describe("rem unit", () => {
   });
 });
 
+describe("ignoreRule option", () => {
+  it("should allow to ignore a selector completely", () => {
+    expect(
+      transform(
+        `
+      .foo {
+        color: red;
+      }
+      .bar {
+        font-size: 12px;
+      }
+    `,
+        {
+          ignoreRule: (selector) => {
+            if (selector === ".foo") {
+              return true;
+            }
+          },
+        },
+      ),
+    ).toEqual({
+      bar: { fontSize: 12 },
+    });
+  });
+
+  it("should do nothing when returing false", () => {
+    expect(
+      transform(
+        `
+        .foo {
+          color: red;
+        }
+        .bar {
+          font-size: 12px;
+        }
+    `,
+        {
+          ignoreRule: (selector) => {
+            if (selector === ".bar") {
+              return false;
+            }
+            if (selector === ".foo") {
+              return false;
+            }
+          },
+        },
+      ),
+    ).toEqual({
+      bar: { fontSize: 12 },
+      foo: { color: "red" },
+    });
+  });
+
+  it("should not error out even if ignoreRule is not a function", () => {
+    expect(
+      transform(
+        `
+        .foo {
+          color: red;
+        }
+        .bar {
+          font-size: 12px;
+        }
+      `,
+        {
+          ignoreRule: true,
+        },
+      ),
+    ).toEqual({
+      bar: { fontSize: 12 },
+      foo: { color: "red" },
+    });
+  });
+});
+
 describe("viewport units", () => {
   it("should transform viewport units", () => {
     expect(
@@ -3191,6 +3266,48 @@ describe("media queries", () => {
       container: { backgroundColor: "#f00" },
       "@media (orientation: portrait), (orientation: landscape)": {
         container: { backgroundColor: "#00f" },
+      },
+    });
+  });
+
+  it("should support media queries + ignoreRule option", () => {
+    expect(
+      transform(
+        `
+        .container {
+          background-color: #f00;
+        }
+
+        @media (orientation: landscape) {
+          .container {
+            background-color: #00f;
+          }
+        }
+        `,
+        {
+          ignoreRule: (selector) => {
+            if (selector === ".container") {
+              return true;
+            }
+          },
+          parseMediaQueries: true,
+        },
+      ),
+    ).toEqual({
+      __mediaQueries: {
+        "@media (orientation: landscape)": [
+          {
+            expressions: [
+              {
+                feature: "orientation",
+                modifier: undefined,
+                value: "landscape",
+              },
+            ],
+            inverse: false,
+            type: "all",
+          },
+        ],
       },
     });
   });

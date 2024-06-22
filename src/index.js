@@ -111,6 +111,13 @@ const transform = (css, options) => {
         continue;
       }
 
+      if (
+        typeof options?.ignoreRule === "function" &&
+        options.ignoreRule(rule.selectors[s]) === true
+      ) {
+        continue;
+      }
+
       const selector = rule.selectors[s].replace(/^\./, "");
       const styles = (result[selector] = result[selector] || {});
       transformDecls(styles, rule.declarations, result);
@@ -155,6 +162,13 @@ const transform = (css, options) => {
       for (const r in rule.rules) {
         const ruleRule = rule.rules[r];
         for (const s in ruleRule.selectors) {
+          if (
+            typeof options?.ignoreRule === "function" &&
+            options.ignoreRule(ruleRule.selectors[s]) === true
+          ) {
+            continue;
+          }
+
           result[media] = result[media] || {};
           const selector = ruleRule.selectors[s].replace(/^\./, "");
           const mediaStyles = (result[media][selector] =
