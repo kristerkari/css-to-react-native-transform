@@ -158,6 +158,23 @@ describe("misc", () => {
     });
   });
 
+  it("converts an uppercase rem unit to pixels", () => {
+    expect(
+      transform(`
+      .test {
+        margin: 1REM;
+      }
+      `),
+    ).toEqual({
+      test: {
+        marginTop: 16,
+        marginRight: 16,
+        marginBottom: 16,
+        marginLeft: 16,
+      },
+    });
+  });
+
   it("allows percent values in transformed values", () => {
     expect(
       transform(`
@@ -1298,6 +1315,46 @@ describe("line-height", () => {
       __viewportUnits: true,
       test: {
         lineHeight: "2vh",
+      },
+    });
+  });
+  it("transforms line-height with an uppercase px unit", () => {
+    expect(
+      transform(`
+      .test {
+        line-height: 1.5PX;
+      }
+    `),
+    ).toEqual({
+      test: {
+        lineHeight: 1.5,
+      },
+    });
+  });
+  it("transforms line-height with an uppercase rem unit", () => {
+    expect(
+      transform(`
+      .test {
+        line-height: 2REM;
+      }
+    `),
+    ).toEqual({
+      test: {
+        lineHeight: 32,
+      },
+    });
+  });
+  it("transforms line-height with an uppercase viewport unit", () => {
+    expect(
+      transform(`
+      .test {
+        line-height: 2VH;
+      }
+    `),
+    ).toEqual({
+      __viewportUnits: true,
+      test: {
+        lineHeight: "2VH",
       },
     });
   });
