@@ -12,11 +12,11 @@ import { camelCase } from "./utils/camelCase";
 import { sortRules } from "./utils/sortRules";
 import { values } from "./utils/values";
 
-const lengthRe = /^(0$|(?:[+-]?(?:\d*\.)?\d+(?:[Ee][+-]?\d+)?)(?=px|rem$))/;
-const viewportUnitRe = /^([+-]?[0-9.]+)(vh|vw|vmin|vmax)$/;
+const lengthRe = /^(0$|(?:[+-]?(?:\d*\.)?\d+(?:[Ee][+-]?\d+)?)(?=px|rem$))/i;
+const viewportUnitRe = /^([+-]?[0-9.]+)(vh|vw|vmin|vmax)$/i;
 const percentRe = /^([+-]?(?:\d*\.)?\d+(?:[Ee][+-]?\d+)?%)$/;
 const unsupportedUnitRe =
-  /^([+-]?(?:\d*\.)?\d+(?:[Ee][+-]?\d+)?(ch|em|ex|cm|mm|in|pc|pt))$/;
+  /^([+-]?(?:\d*\.)?\d+(?:[Ee][+-]?\d+)?(ch|em|ex|cm|mm|in|pc|pt))$/i;
 const shorthandBorderProps = [
   "border-radius",
   "border-width",
